@@ -1,0 +1,27 @@
+<!-- templates/policy_graph/add_policy_step2.html -->
+{% extends 'forum/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>🔍 Matched Policy Activity</h2>
+  <p><strong>Required Input Type:</strong> {{ input_type }}</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="step" value="2" />
+    <input type="hidden" name="policy_text" value="{{ policy_text }}">
+    <input type="hidden" name="country" value="{{ country }}">
+    <input type="hidden" name="intent" value="{{ intent }}">
+    <input type="hidden" name="title" value="{{ title }}">
+    <input type="hidden" name="date_issued" value="{{ date_issued }}">
+
+    <div class="form-group">
+      <label for="user_input">Enter Value for <strong>{{ input_type }}</strong></label>
+      <input type="number" class="form-control" name="user_input" required min="1" step="0.01">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit Policy ✅</button>
+  </form>
+</div>
+{% endblock %}

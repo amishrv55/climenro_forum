@@ -1,0 +1,11 @@
+﻿Country,GDP per capita,Vehicle ownership,Urbanization (%),Composite Score,Category
+Norway,"$89,000",750,83,0.95,High
+USA,"$76,000",800,83,0.89,High
+Germany,"$51,500",600,78,0.66,Medium
+Japan,"$43,000",610,92,0.66,Medium
+UK,"$49,000",530,83,0.64,Medium
+India,"$2,500",35,35,0.01,Low
+Brazil,"$9,500",220,87,0.31,Low
+China,"$12,500",220,65,0.25,Low
+Nigeria,"$2,400",20,52,0.06,Low
+South Korea,"$37,000",450,82,0.53,Medium

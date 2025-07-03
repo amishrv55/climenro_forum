@@ -1,0 +1,23 @@
+{% extends 'forum/base.html' %}
+{% block title %}r/{{ subreddit.name }} | Climenro Forum{% endblock %}
+
+{% block content %}
+  <h2>r/{{ subreddit.name }}</h2>
+  <p class="text-muted">{{ subreddit.description }}</p>
+  <hr>
+
+  {% for post in posts %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+        <p class="text-muted">
+          Posted by {{ post.author.username }} on {{ post.created_at|date:"M d, Y" }}
+        </p>
+        <p>{{ post.content|truncatewords:30 }}</p>
+        <p>👍 {{ post.upvotes }} | 👎 {{ post.downvotes }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p>No posts yet. Be the first to post!</p>
+  {% endfor %}
+{% endblock %}

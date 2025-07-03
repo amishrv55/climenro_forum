@@ -1,0 +1,53 @@
+{% extends 'forum/base.html' %}
+
+{% block title %}GHG Sector Insights{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Emissions & Sector Insights</h2>
+  <p>Last updated: {{ now|date:"Y-m-d H:i" }}</p>
+
+  <form method="get">
+    <div class="row mb-3">
+      <div class="col">
+        <label>Country:</label>
+        <select name="country" class="form-select">
+          {% for c in countries %}
+            <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <label>Year:</label>
+        <select name="year" class="form-select">
+          {% for y in years %}
+            <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-auto">
+        <label>&nbsp;</label>
+        <button type="submit" class="btn btn-primary form-control">Update</button>
+      </div>
+    </div>
+  </form>
+
+  <hr/>
+
+  <h5>Key Metrics ({{ selected_country }}, {{ selected_year }})</h5>
+  <ul>
+    <li><strong>Total GHG:</strong> {{ total_ghg|floatformat:2 }} MtCO₂e</li>
+    <li><strong>Fossil CO₂:</strong> {{ total_co2|floatformat:2 }} MtCO₂e</li>
+    <li><strong>Bio CO₂:</strong> {{ total_co2bio|floatformat:2 }} MtCO₂e</li>
+    <li><strong>CH₄:</strong> {{ total_ch4|floatformat:2 }} MtCO₂e</li>
+    <li><strong>N₂O:</strong> {{ total_n2o|floatformat:2 }} MtCO₂e</li>
+    <li><strong>Global Rank:</strong> #{{ rank }}</li>
+  </ul>
+
+  <hr/>
+
+  <h5>Top Emitting Activities</h5>
+  <div>{{ chart_html|safe }}</div>
+  <div class="mt-4">{{ df_top|safe }}</div>
+</div>
+{% endblock %}

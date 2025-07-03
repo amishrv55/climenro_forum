@@ -1,0 +1,47 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ gas }} Trend – {{ selected_sector }} in {{ selected_country }} ({{ selected_year }})</h2>
+
+    <form method="get" class="row g-3">
+        <div class="col-md-3">
+            <label for="country" class="form-label">🌍 Country</label>
+            <select class="form-select" name="country" id="country">
+                {% for c in countries %}
+                <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="sector" class="form-label">🏭 Sector</label>
+            <select class="form-select" name="sector" id="sector">
+                {% for s in sectors %}
+                <option value="{{ s }}" {% if s == selected_sector %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="year" class="form-label">📅 Year</label>
+            <select class="form-select" name="year" id="year">
+                {% for y in years %}
+                <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-secondary w-100">🔄 Update</button>
+        </div>
+    </form>
+
+    <div class="mt-4">
+        <h4>Total {{ gas }} Emissions:</h4>
+        <p class="lead">{{ total_value|floatformat:2 }} MtCO₂e</p>
+    </div>
+
+    <div class="mt-4">
+        {{ chart_html|safe }}
+    </div>
+</div>
+{% endblock %}

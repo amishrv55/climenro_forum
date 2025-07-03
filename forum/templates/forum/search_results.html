@@ -1,0 +1,30 @@
+{% extends 'forum/base.html' %}
+{% block title %}Search Results | Climenro Forum{% endblock %}
+
+{% block content %}
+  <h3>Search Results for "{{ query }}"</h3>
+
+  <hr>
+  <h4>Posts</h4>
+  {% for post in post_results %}
+    <div class="card mb-2">
+      <div class="card-body">
+        <h5><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+        <p class="text-muted">r/{{ post.subreddit.name }} • {{ post.author.username }} • {{ post.created_at|date:"M d, Y" }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p>No posts found.</p>
+  {% endfor %}
+
+  <hr>
+  <h4>Subreddits</h4>
+  {% for subreddit in subreddit_results %}
+    <div class="mb-2">
+      <a href="{% url 'subreddit' subreddit.name %}">r/{{ subreddit.name }}</a>
+      <p>{{ subreddit.description }}</p>
+    </div>
+  {% empty %}
+    <p>No subreddits found.</p>
+  {% endfor %}
+{% endblock %}

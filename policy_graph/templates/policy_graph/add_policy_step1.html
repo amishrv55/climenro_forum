@@ -1,0 +1,53 @@
+<!-- templates/policy_graph/add_policy_step1.html -->
+{% extends 'forum/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">➕ Add New Policy</h2>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="step" value="1" />
+
+    <div class="form-group">
+      <label for="policy_text">Policy Description</label>
+      <textarea class="form-control" id="policy_text" name="policy_text" rows="5" required></textarea>
+    </div>
+
+    <div class="form-row mt-3">
+      <div class="form-group col-md-6">
+        <label for="title">Policy Title</label>
+        <input type="text" class="form-control" name="title" required>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="country">Country</label>
+        <select class="form-control" name="country" required>
+          {% for c in countries %}
+            <option value="{{ c }}">{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row mt-3">
+      <div class="form-group col-md-6">
+        <label for="intent">Graph Intent / Central Goal</label>
+        <input type="text" class="form-control" name="intent" value="Net Zero 2030" required>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="date_issued">Date Issued</label>
+        <input type="date" class="form-control" name="date_issued" required>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Continue ➡️</button>
+  </form>
+</div>
+{% endblock %}

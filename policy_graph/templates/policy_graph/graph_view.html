@@ -1,0 +1,40 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>🌐 National Policy Graph</h2>
+
+  <form method="get" class="row mb-4">
+  <div class="col-md-5">
+    <label for="intent">Select Intent:</label>
+    <select class="form-select" name="intent">
+      <option value="">All</option>
+      {% for intent in available_intents %}
+        <option value="{{ intent }}" {% if current_intent == intent %}selected{% endif %}>{{ intent }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  
+  <div class="col-md-5">
+    <label for="country">Select Country:</label>
+    <select class="form-select" name="country">
+      <option value="">All</option>
+      {% for country in available_countries %}
+        <option value="{{ country }}" {% if current_country == country %}selected{% endif %}>{{ country }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-md-2 d-flex align-items-end">
+    <button class="btn btn-success w-100" type="submit">Apply Filters</button>
+  </div>
+</form>
+
+  {% if error %}
+    <div class="alert alert-warning">{{ error }}</div>
+  {% else %}
+    {{ graph_html|safe }}
+  {% endif %}
+</div>
+{% endblock %}

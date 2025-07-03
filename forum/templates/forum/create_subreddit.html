@@ -1,0 +1,20 @@
+{% extends 'forum/base.html' %}
+{% block title %}Create Climate Mission | Climenro Forum{% endblock %}
+
+{% block content %}
+  <h3>Create a New Climate Mission</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">Climate Mission Name (e.g., cats, climate)</label>
+      <input type="text" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea name="description" class="form-control" rows="4" required></textarea>
+    </div>
+
+    <button class="btn btn-success">Create</button>
+  </form>
+{% endblock %}

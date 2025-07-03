@@ -1,0 +1,84 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-3">📋 Sector Emission Summary</h2>
+
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <label for="country" class="form-label">🌍 Country</label>
+            <select class="form-select" id="country" name="country">
+                {% for c in countries %}
+                    <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="year" class="form-label">📅 Year</label>
+            <select class="form-select" id="year" name="year">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="sector" class="form-label">🏭 Sector</label>
+            <select class="form-select" id="sector" name="sector">
+                {% for s in sectors %}
+                    <option value="{{ s }}" {% if s == selected_sector %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 align-self-end">
+            <button type="submit" class="btn btn-success w-100">🔍 Apply</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <h5 class="mb-3">
+        Emissions for <strong>{{ selected_sector }}</strong> in <strong>{{ selected_country }}</strong> ({{ selected_year }})
+    </h5>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Gas</th>
+                <th>Emissions (MtCO₂e)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gas, value in summary.items %}
+                <tr>
+                    <td>{{ gas }}</td>
+                    <td>{{ value|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h5 class="mt-5 mb-3">🌍 Global Rank by Gas</h5>
+    <div class="row">
+        {% for gas, rank in ranks.items %}
+            <div class="col-md-2 mb-3">
+                <div class="card border-primary">
+                    <div class="card-body text-center">
+                        <h6 class="card-title">{{ gas }}</h6>
+                        <p class="card-text fs-5">#{{ rank }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h5 class="mt-5 mb-3">📈 Gas-wise Sector Emission Trends</h5>
+    <div class="d-flex flex-wrap gap-2">
+        {% for gas in summary.keys %}
+            <a href="{% url 'dashboard:sector_gas_trend' gas=gas %}?country={{ selected_country }}&sector={{ selected_sector }}&year={{ selected_year }}"
+               class="btn btn-outline-primary">
+               🔍 View {{ gas }} Trend
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

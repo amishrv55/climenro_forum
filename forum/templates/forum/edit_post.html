@@ -1,0 +1,21 @@
+{% extends 'forum/base.html' %}
+{% block title %}Edit Post | Climenro Forum{% endblock %}
+
+{% block content %}
+  <h3>Edit Post</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="content" class="form-label">Content</label>
+      <textarea name="content" class="form-control" rows="6" required>{{ post.content }}</textarea>
+    </div>
+
+    <button class="btn btn-success">Save Changes</button>
+    <a href="{% url 'post_detail' post.id %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>📘 Greenhouse Gas Activity Guide</h2>
+    <p>This guide explains how different sectors contribute to GHG emissions:</p>
+
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Electricity & Heat:</strong> Coal, oil, gas combustion</li>
+        <li class="list-group-item"><strong>Transport:</strong> CO₂, N₂O from fuel use</li>
+        <li class="list-group-item"><strong>Agriculture:</strong> CH₄ from livestock, N₂O from fertilizer</li>
+        <li class="list-group-item"><strong>Industry:</strong> CO₂ from cement, iron, chemicals</li>
+        <li class="list-group-item"><strong>Waste:</strong> CH₄ from landfills</li>
+        <li class="list-group-item"><strong>LULUCF:</strong> CO₂ sinks and sources</li>
+    </ul>
+
+    <p class="mt-3">Based on IPCC 2006 sector classification.</p>
+</div>
+{% endblock %}

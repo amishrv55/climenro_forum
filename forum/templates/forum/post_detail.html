@@ -1,0 +1,56 @@
+{% extends 'forum/base.html' %}
+{% block title %}{{ post.title }} | Climenro Forum{% endblock %}
+
+{% block content %}
+  <h3>{{ post.title }}</h3>
+  <p class="text-muted">
+    Posted in <a href="{% url 'subreddit' post.subreddit.name %}">r/{{ post.subreddit.name }}</a> 
+    by {{ post.author.username }} on {{ post.created_at|date:"M d, Y" }}
+  </p>
+  <p>{{ post.content }}</p>
+
+  <form method="post" action="{% url 'vote_post' post.id 'up' %}" style="display:inline;">
+    {% csrf_token %}
+    <button class="btn btn-sm btn-success">👍 {{ post.upvotes }}</button>
+  </form>
+  <form method="post" action="{% url 'vote_post' post.id 'down' %}" style="display:inline;">
+    {% csrf_token %}
+    <button class="btn btn-sm btn-danger">👎 {{ post.downvotes }}</button>
+  </form>
+
+  <hr>
+  <h5>Comments</h5>
+  {% if comments %}
+    {% for comment in comments %}
+      <div class="mb-3 p-2 border rounded">
+        <strong>{{ comment.author.username }}</strong> • {{ comment.created_at|date:"M d, Y H:i" }}
+        <p>{{ comment.content }}</p>
+
+        <form method="post" action="{% url 'vote_comment' comment.id 'up' %}" style="display:inline;">
+          {% csrf_token %}
+          <button class="btn btn-sm btn-outline-success">👍 {{ comment.upvotes }}</button>
+        </form>
+        <form method="post" action="{% url 'vote_comment' comment.id 'down' %}" style="display:inline;">
+          {% csrf_token %}
+          <button class="btn btn-sm btn-outline-danger">👎 {{ comment.downvotes }}</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No comments yet. Be the first to comment.</p>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <hr>
+    <form method="post" action="{% url 'add_comment' post.id %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <textarea name="content" class="form-control" placeholder="Add a comment..." required></textarea>
+      </div>
+      <input type="hidden" name="parent_id" value="">
+      <button class="btn btn-primary">Post Comment</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to comment.</p>
+  {% endif %}
+{% endblock %}

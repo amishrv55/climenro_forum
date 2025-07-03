@@ -1,0 +1,55 @@
+{% extends 'forum/base.html' %}
+{% block title %}Climate News & Updates{% endblock %}
+
+{% block content %}
+<h2>📰 Climate News & Policy Updates</h2>
+
+<form method="get" class="row g-2 my-3">
+  <div class="col-md-3">
+    <select name="country" class="form-select">
+      <option value="">All Countries</option>
+      {% for code, name in countries %}
+        <option value="{{ code }}" {% if selected_country == code %}selected{% endif %}>{{ name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="sector" class="form-select">
+      <option value="">All Sectors</option>
+      {% for code, name in sectors %}
+        <option value="{{ code }}" {% if selected_sector == code %}selected{% endif %}>{{ name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="impact" class="form-select">
+      <option value="">All Impact Levels</option>
+      {% for code, name in impacts %}
+        <option value="{{ code }}" {% if selected_impact == code %}selected{% endif %}>{{ name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-primary w-100">Filter</button>
+  </div>
+</form>
+
+{% for article in articles %}
+  <div class="card mb-3">
+    {% if article.cover_image %}
+      <img src="{{ article.cover_image.url }}" class="card-img-top" alt="Cover Image">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ article.title }}</h5>
+      <p class="card-text text-muted">
+        {{ article.country }} | {{ article.sector }} | Impact: <strong>{{ article.impact }}</strong><br>
+        Posted by {{ article.posted_by }} on {{ article.created_at|date:"M d, Y" }}
+      </p>
+      <p>{{ article.content|truncatewords:50 }}</p>
+      <a href="{% url 'news_detail' article.id %}" class="btn btn-sm btn-outline-primary">Read more →</a>
+    </div>
+  </div>
+{% empty %}
+  <p>No articles found.</p>
+{% endfor %}
+{% endblock %}

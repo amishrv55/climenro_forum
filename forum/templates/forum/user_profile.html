@@ -1,0 +1,33 @@
+{% extends 'forum/base.html' %}
+{% block title %}{{ profile_user.username }} | Profile{% endblock %}
+
+{% block content %}
+  <h3>{{ profile_user.username }}'s Profile</h3>
+  <p>Karma: {{ karma }} | Comments: {{ comment_count }}</p>
+  <hr>
+
+  <h4>Posts</h4>
+  {% for post in posts %}
+    <div class="mb-3">
+      <h5><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+      <p class="text-muted">
+        In <a href="{% url 'subreddit' post.subreddit.name %}">r/{{ post.subreddit.name }}</a> on {{ post.created_at|date:"M d, Y" }}
+      </p>
+    </div>
+  {% empty %}
+    <p>No posts yet.</p>
+  {% endfor %}
+
+  <hr>
+  <h4>Comments</h4>
+  {% for comment in comments %}
+    <div class="mb-3">
+      <p>{{ comment.content }}</p>
+      <p class="text-muted">
+        On <a href="{% url 'post_detail' comment.post.id %}">{{ comment.post.title }}</a> — {{ comment.created_at|date:"M d, Y H:i" }}
+      </p>
+    </div>
+  {% empty %}
+    <p>No comments yet.</p>
+  {% endfor %}
+{% endblock %}

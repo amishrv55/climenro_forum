@@ -1,0 +1,83 @@
+﻿Activity Class,Sector,Unit,CO₂e Impact,Impact Type,Source,Confidence,Keywords,Required Input Type,Default Unit Cost,Uses Displacement,Displacement Default,Instrument Type
+Replace ICE vehicle with EV,Transport,per vehicle/year,–1.6 tons,Mitigation,"IEA, ICCT",Medium,"EV, electric vehicle, e-mobility",budget,5000,TRUE,0.6,subsidy
+Subsidize Electric Buses,Transport,per bus/year,–25 tons,Mitigation,ICCT,High,"electric bus, e-bus, ZEV bus",budget,100000,TRUE,0.7,subsidy
+Construct Urban Metro Rail,Transport,per km/year,"–5,000 tons",Mitigation,UIC,High,"metro rail, urban transit, subway",length_km,,FALSE,,infrastructure
+Promote Cycling Infrastructure,Transport,per km,–80 tons,Mitigation,"IPCC, UTTIPEC",Medium,"cycle lane, NMT, cycle track",length_km,,FALSE,,infrastructure
+Phase Out Diesel Buses,Transport,per bus/year,–20 tons,Mitigation,ICCT,Medium,"diesel bus ban, retrofit buses",number_units,,FALSE,,regulation
+Electrify Intercity Rail,Transport,per km/year,"–3,000 tons",Mitigation,UIC,High,"electric train, intercity rail",length_km,,FALSE,,infrastructure
+Add 1 GW Wind Power,Electricity,per GW/year,–1.2 Mt/year,Mitigation,IEA,High,"wind energy, wind farm",capacity_gw,,FALSE,,energy transition
+Shutdown Coal Power Plant,Electricity,per GW/year,–3 Mt/year,Mitigation,IEA,High,"coal closure, phase-out coal",capacity_gw,,FALSE,,decommission
+Rooftop Solar Installation,Electricity,per MW/year,–800 tons,Mitigation,MNRE,Medium,"rooftop solar, distributed PV",capacity_gw,,FALSE,,subsidy
+Construct 1 km 4-lane highway,Infrastructure,per km,"+20,000 tons",Emission,OECD,Medium,"highway, 4-lane, road",length_km,,FALSE,,infrastructure
+Support Grid Battery Storage,Electricity,per MWh,–50 tons,Mitigation,IEA,Medium,"battery storage, grid battery",capacity_gw,,FALSE,,technology support
+Renovate Hydro Plants,Electricity,per GW/year,–0.5 Mt,Mitigation,IHA,Medium,"hydro upgrade, dam refurbishment",capacity_gw,,FALSE,,retrofit
+Build 1 MTPA cement plant,Cement,per MTPA,+0.8 Mt/year,Emission,GNR,High,"cement plant, clinker",capacity_mtpa,,FALSE,,expansion
+Implement CCS in cement,Cement,per MTPA,–0.6 Mt/year,Mitigation,IPCC,Medium,"cement CCS, CO₂ capture",capacity_mtpa,,FALSE,,technology
+Use Fly Ash in Cement,Cement,per MTPA,–0.3 Mt/year,Mitigation,BEE,Medium,"blended cement, fly ash",capacity_mtpa,,FALSE,,material switch
+Promote AAC blocks,Construction,per million blocks,–50 tons,Mitigation,IGBC,Medium,"AAC block, low-carbon construction",number_units,,FALSE,,material switch
+Convert land to forest,Land Use,per hectare/year,–4.8 tons,Mitigation,IPCC,Medium,"afforestation, reforestation",area_ha,,FALSE,,land use
+Urban Green Roofs,Construction,per 1000 m²,–2 tons,Mitigation,UNEP,Low,"green roof, rooftop garden",area_ha,,FALSE,,building mandate
+Enteric fermentation reduction,Agriculture,per cow/year,–0.3 tons,Mitigation,FAO,Low,"methane feed, enteric",number_cows,,FALSE,,livestock reform
+Rice field alternate wetting,Agriculture,per hectare/year,–1.5 tons,Mitigation,IRRI,Medium,"rice methane, AWD",area_ha,,FALSE,,water mgmt
+Biochar on croplands,Agriculture,per hectare/year,–1.1 tons,Mitigation,IPCC,Medium,"biochar, soil carbon",area_ha,,FALSE,,soil treatment
+Solar Irrigation Pumps,Agriculture,per pump/year,–0.5 tons,Mitigation,MNRE,Medium,"solar pump, irrigation",number_pumps,,FALSE,,subsidy
+Improved Fertilizer Use,Agriculture,per hectare/year,–0.8 tons,Mitigation,FAO,Medium,"nitrification inhibitor, fertigation",area_ha,,FALSE,,practice change
+Anaerobic digestion for manure,Waste,per plant/year,–1.5 kt,Mitigation,IPCC,Medium,"biogas, manure digestion",number_plants,,FALSE,,waste to energy
+Compost Municipal Waste,Waste,per ton,–0.75 tons,Mitigation,USEPA,Medium,"compost, waste diversion",tons_waste,,FALSE,,waste reform
+Divert plastic to pyrolysis,Waste,per ton,–0.9 tons,Mitigation,UNEP,Low,"plastic recycling, pyrolysis",tons_waste,,FALSE,,waste recovery
+Treat Industrial Wastewater,Water,per plant/year,–1.2 kt,Mitigation,UNFCCC,Medium,"ETP, wastewater methane",number_plants,,FALSE,,water tech
+Electrify Cargo Trucks,Transport,per truck/year,–35 tons,Mitigation,IEA,Medium,"electric truck, freight ZEV",number_units,70000,TRUE,0.65,subsidy
+Aviation Biofuel Mandate,Aviation,per 1000 L,–2.0 tons,Mitigation,ICAO,Low,"SAF, aviation biofuel",liters_fuel,,FALSE,,mandate
+Replace LPG with Induction,Household Energy,per stove/year,–0.6 tons,Mitigation,CCA,Medium,"induction stove, cook electric",number_units,,FALSE,,subsidy
+Promote Biogas for Cooking,Household Energy,per plant/year,–0.5 tons,Mitigation,MNRE,Medium,"biogas, clean cooking",number_units,,FALSE,,subsidy
+Promote District Heating,Buildings,per building/year,–4 tons,Mitigation,IEA,Medium,"district heat, thermal network",number_units,,FALSE,,efficiency
+Mandate Green Building Code,Buildings,per building/year,–3.2 tons,Mitigation,UNEP,Medium,"ECBC, LEED, BEE star",number_units,,FALSE,,regulation
+Mandate E-vehicles in fleet,Transport,per 100 vehicles,–160 tons,Mitigation,Govt. notifications,High,fleet electrification,number_units,,TRUE,0.6,regulation
+Retrofit Diesel GenSets,Energy,per unit/year,–12 tons,Mitigation,CPCB,Medium,"retrofit genset, DG replacement",number_units,,FALSE,,tech upgrade
+Energy-efficient streetlights,Urban Infra,per 1000 lights/year,–22 tons,Mitigation,ULB reports,Medium,LED streetlight,number_units,,FALSE,,energy efficiency
+Incentivize Solar Dryers,Agriculture,per dryer/year,–0.3 tons,Mitigation,MNRE,Medium,"solar dryer, agri-drying",number_units,,FALSE,,subsidy
+Promote CNG Vehicles,Transport,per vehicle/year,–1.2 tons,Mitigation,MoPNG,Medium,"CNG car, switch from petrol",number_units,,TRUE,0.5,fuel switch
+Convert Diesel Boats to Solar,Water Transport,per boat/year,–2.4 tons,Mitigation,Inland Waterways,Low,"solar boat, river transport",number_units,,TRUE,0.6,tech conversion
+Promote Low-Clinker Cement,Cement,per MTPA,–0.4 Mt/year,Mitigation,"GNR, IPCC",Medium,"PPC, PSC, blended cement",capacity_mtpa,,FALSE,,material switch
+Mandate Clinker Substitution,Cement,per MTPA,–0.35 Mt/year,Mitigation,CEMBUREAU,High,"SCM, fly ash, slag cement",capacity_mtpa,,FALSE,,regulation
+Tax on High Emission Cement,Cement,per MTPA,–0.2 Mt/year,Mitigation,BEE,Medium,"cement tax, carbon tax cement",capacity_mtpa,,FALSE,,tax
+Promote Green Cement Standards,Cement,per MTPA,–0.25 Mt/year,Mitigation,IGBC,Medium,"green cement, eco cement",capacity_mtpa,,FALSE,,labeling
+Mandate Waste Heat Recovery,Cement,per plant/year,–0.12 Mt/year,Mitigation,TERI,Medium,"WHR cement, waste heat",number_plants,,FALSE,,tech mandate
+Aviation SAF Subsidy,Aviation,per 1000 L,–2.0 tons,Mitigation,ICAO,Low,sustainable aviation fuel,liters_fuel,,FALSE,,subsidy
+Carbon Offset Mandate for Airlines,Aviation,per flight/year,–0.15 tons,Mitigation,IATA,Medium,"airline offset, carbon credits",number_units,,FALSE,,regulation
+Electrify Ground Support at Airports,Aviation,per airport/year,–0.02 Mt,Mitigation,ICAO,Low,"airport EV, e-GPU, ground electrification",number_units,,FALSE,,tech upgrade
+Introduce Light Rail in City,Urban Transport,per km/year,"–2,000 tons",Mitigation,UITP,Medium,"light rail, city transit",length_km,,FALSE,,infrastructure
+Urban Tree Plantation Drive,Urban Forestry,per 1000 trees/year,–150 tons,Mitigation,Urban Greening Missions,Medium,"urban tree, avenue tree",number_units,,FALSE,,community
+Introduce Congestion Pricing,Urban,per 1000 vehicles/day,–200 tons,Mitigation,World Bank,Medium,"congestion fee, car ban",number_units,,FALSE,,economic instrument
+Promote Net Zero Building Norms,Urban,per building/year,–5.0 tons,Mitigation,UNEP,Medium,"net zero building, green housing",number_units,,FALSE,,building code
+Build Urban Waste Sorting Unit,Urban,per unit/year,–1200 tons,Mitigation,CPCB,Medium,"MRF, waste segregation",number_units,,FALSE,,infra
+Improve Urban Drainage Infra,Urban,per ward/year,–0.01 Mt,Mitigation,Smart Cities Mission,Low,"stormwater, drainage upgrade",number_units,,FALSE,,infra
+Promote Vertical Forest Buildings,Urban Forestry,per tower/year,–150 tons,Mitigation,UN Habitat,Low,"green tower, vertical garden",number_units,,FALSE,,innovation
+Introduce Zero Waste Housing Policy,Urban,per housing unit/year,–2.5 tons,Mitigation,MOHUA,Medium,"zero waste home, composting toilet",number_units,,FALSE,,regulation
+Fund Urban Mobility EV Hubs,Urban Transport,per hub/year,"–1,000 tons",Mitigation,NITI Aayog,Medium,"EV charging, multimodal hub",number_units,,FALSE,,subsidy
+Incentivize Urban Retrofit Projects,Urban,per building/year,–1.2 tons,Mitigation,GIZ,Medium,"energy retrofit, green retrofit",number_units,,FALSE,,incentive
+Implement Eco Zone Ring Road,Urban Planning,per km,"–3,000 tons",Mitigation,Town Planning Dept,Medium,"bypass ring road, eco zone",length_km,,FALSE,,zoning
+Establish Forestry Carbon Bank,Forestry,per bank/year,–50 kt,Mitigation,UNDP,Medium,"forest carbon credits, carbon registry",number_units,,FALSE,,finance mechanism
+Adopt hydrogen-based DRI in steel,Steel,per MTPA,–1.8 Mt/year,Mitigation,TBD,Medium,"hydrogen steel, H₂ steel, DRI",capacity_mtpa,,FALSE,,technology upgrade
+Use electric arc furnace in steelmaking,Steel,per MTPA,–1.2 Mt/year,Mitigation,TBD,Medium,"EAF, scrap steel, electric furnace",capacity_mtpa,,FALSE,,technology switch
+Mandate low-carbon construction steel,Steel,per MTPA,–1.0 Mt/year,Mitigation,TBD,Medium,"green steel, low emission steel",capacity_mtpa,,FALSE,,regulation
+Retire blast furnace unit,Steel,per unit/year,–2.0 Mt/year,Mitigation,TBD,Medium,"blast furnace shutdown, old steel unit",number_units,,FALSE,,decommission
+Green hydrogen electrolysis plant,Hydrogen,per GW,–1.4 Mt/year,Mitigation,TBD,Medium,"green hydrogen, electrolysis",capacity_gw,,FALSE,,infrastructure
+Mandate hydrogen blending in gas grid,Hydrogen,per % blend/year,–0.5 Mt/year,Mitigation,TBD,Medium,"H₂ blending, pipeline hydrogen",percent_blend,,FALSE,,mandate
+Subsidize hydrogen-powered buses,Transport,per bus/year,–22 tons,Mitigation,TBD,Medium,"H₂ bus, hydrogen fuel bus",number_units,,FALSE,,subsidy
+Hydrogen refueling station rollout,Infrastructure,per station/year,–1.5 kt,Mitigation,TBD,Medium,"H₂ station, hydrogen refueling",number_units,,FALSE,,subsidy
+Launch carbon pricing scheme,Cross-Sector,per scheme/year,–20 Mt/year,Mitigation,TBD,Medium,"ETS, carbon tax, cap-and-trade",number_units,,FALSE,,market mechanism
+Issue green bonds for mitigation,Finance,per billion USD/year,–0.6 Mt/year,Mitigation,TBD,Medium,"green bond, climate finance",budget,,FALSE,,finance
+Incentivize ESG disclosure,Finance,per firm/year,–0.01 Mt/year,Mitigation,TBD,Medium,"ESG mandate, climate disclosure",number_units,,FALSE,,regulation
+National carbon offset registry,Finance,per registry/year,–2 Mt/year,Mitigation,TBD,Medium,"carbon credit system, offset mechanism",number_units,,FALSE,,governance
+Mangrove restoration project,Forestry,per hectare/year,–6.0 tons,Mitigation,TBD,Medium,"mangrove planting, coastal resilience",area_ha,,FALSE,,conservation
+Peatland rewetting,Land Use,per hectare/year,–5.0 tons,Mitigation,TBD,Medium,"peat restoration, wetland rewet",area_ha,,FALSE,,land use
+Grassland conservation policy,Land Use,per hectare/year,–1.2 tons,Mitigation,TBD,Medium,"savanna conservation, grassland",area_ha,,FALSE,,policy
+Blue carbon marine protected area,Blue Carbon,per MPA/year,–1.0 Mt/year,Mitigation,TBD,Medium,"blue carbon, sea grass, MPA",number_units,,FALSE,,regulation
+Develop city heat action plans,Urban,per city/year,N/A,Adaptation,TBD,Medium,"heatwave plan, urban heat",number_units,,FALSE,,resilience
+Upgrade cyclone early warning systems,Disaster Mgmt,per system/year,N/A,Adaptation,TBD,Medium,"cyclone alert, early warning",number_units,,FALSE,,infrastructure
+Build sea walls/coastal buffer zones,Coastal Infra,per km,N/A,Adaptation,TBD,Medium,"coastal resilience, storm surge",length_km,,FALSE,,infrastructure
+Fund urban flood resilience infra,Urban Infra,per project/year,N/A,Adaptation,TBD,Medium,"flood-proofing, sponge cities",number_units,,FALSE,,funding
+Resilient agriculture planning,Agriculture,per district/year,N/A,Adaptation,TBD,Medium,"climate-resilient farming, seed bank",number_units,,FALSE,,capacity building
+Direct air capture plant,Carbon Removal,per plant/year,–0.9 Mt/year,Mitigation,TBD,Medium,"DAC, direct CO₂ capture",number_units,,FALSE,,technology
+Enhanced weathering of basalt,Land Use,per hectare/year,–2.5 tons,Mitigation,TBD,Medium,"basalt weathering, CDR minerals",area_ha,,FALSE,,innovation

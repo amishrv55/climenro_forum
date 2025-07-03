@@ -1,0 +1,76 @@
+{% extends 'forum/base.html' %}
+{% block title %}Home | Climenro Forum{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>🌍 Latest Posts</h2>
+    <div>
+      <a href="?sort=new" class="btn btn-outline-primary btn-sm {% if sort == 'new' %}active{% endif %}">New</a>
+      <a href="?sort=hot" class="btn btn-outline-primary btn-sm {% if sort == 'hot' %}active{% endif %}">Hot</a>
+      <a href="?sort=top" class="btn btn-outline-primary btn-sm {% if sort == 'top' %}active{% endif %}">Top</a>
+    </div>
+  </div>
+  <hr>
+
+  <form method="get" class="mb-3 d-flex">
+  <select name="subreddit" class="form-select me-2">
+  <option value="">All Climate Missions</option>
+    {% for sub in subreddits %}
+    <option value="{{ sub.name }}" {% if sub.name == subreddit_name %}selected{% endif %}>
+      r/{{ sub.name }}
+    </option>
+    {% endfor %}
+  </select>
+
+
+  <select name="country" class="form-select me-2">
+    <option value="">All Countries</option>
+    {% for code, name in countries %}
+      <option value="{{ code }}" {% if code == country_code %}selected{% endif %}>{{ name }}</option>
+    {% endfor %}
+  </select>
+
+  <select name="sort" class="form-select me-2">
+    <option value="new" {% if sort == 'new' %}selected{% endif %}>New</option>
+    <option value="hot" {% if sort == 'hot' %}selected{% endif %}>Hot</option>
+    <option value="top" {% if sort == 'top' %}selected{% endif %}>Top</option>
+  </select>
+
+  <button class="btn btn-primary" type="submit">Filter</button>
+</form>
+
+  {% for post in posts %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+        <p class="text-muted">
+          r/{{ post.subreddit.name }} • Posted by {{ post.author.username }} on {{ post.created_at|date:"M d, Y" }}
+        </p>
+        <p>{{ post.content|truncatewords:30 }}</p>
+        <p>👍 {{ post.upvotes }} | 👎 {{ post.downvotes }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p>No posts found.</p>
+  {% endfor %}
+
+  <div class="mt-4">
+    <nav>
+      <ul class="pagination justify-content-center">
+        {% if posts.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?sort={{ sort }}&page={{ posts.previous_page_number }}">Previous</a>
+          </li>
+        {% endif %}
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+        </li>
+        {% if posts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?sort={{ sort }}&page={{ posts.next_page_number }}">Next</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+{% endblock %}

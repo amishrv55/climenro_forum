@@ -1,0 +1,7 @@
+django
+Pillow
+pandas
+plotly
+networkx
+os
+openpyxl

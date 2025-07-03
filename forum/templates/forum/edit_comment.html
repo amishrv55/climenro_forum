@@ -1,0 +1,14 @@
+{% extends 'forum/base.html' %}
+{% block title %}Edit Comment | Climenro Forum{% endblock %}
+
+{% block content %}
+  <h3>Edit Comment</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <textarea name="content" class="form-control" rows="4" required>{{ comment.content }}</textarea>
+    </div>
+    <button class="btn btn-success">Save Changes</button>
+    <a href="{% url 'post_detail' comment.post.id %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="text-danger">🚫 Error</h2>
+    <p class="lead">{{ message }}</p>
+    <a href="{% url 'dashboard:ghg_intro' %}" class="btn btn-primary mt-3">⬅ Back to Dashboard</a>
+</div>
+{% endblock %}

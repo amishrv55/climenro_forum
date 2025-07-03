@@ -1,0 +1,83 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>🌐 Understanding Greenhouse Gases (GHGs)</h2>
+    <p>
+        Greenhouse gases (GHGs) trap heat in the Earth's atmosphere, causing the greenhouse effect. 
+        They vary in source, lifetime, and warming potential.
+    </p>
+
+    <h4>🔹 Why GHGs Matter</h4>
+    <p>
+        Human activities (fossil fuels, agriculture) have increased GHGs, accelerating global warming and climate instability.
+    </p>
+
+    <h4>🔸 Major Types of GHGs</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Gas</th>
+                <th>Description</th>
+                <th>Sources</th>
+                <th>Global Warming Potential (100 yr)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CO₂</td>
+                <td>Most abundant GHG</td>
+                <td>Fossil fuels, deforestation</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>CH₄</td>
+                <td>Potent, short-lived</td>
+                <td>Livestock, waste, gas leaks</td>
+                <td>28–34</td>
+            </tr>
+            <tr>
+                <td>N₂O</td>
+                <td>Long-lived</td>
+                <td>Fertilizers, industry</td>
+                <td>265–298</td>
+            </tr>
+            <tr>
+                <td>HFCs/PFCs/SF₆</td>
+                <td>Synthetic</td>
+                <td>Refrigerants, semiconductors</td>
+                <td>Hundreds to thousands</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>🧮 Measurement</h4>
+    <p>
+        GHGs are measured in <strong>MtCO₂e</strong> — metric tons of CO₂ equivalent — which normalizes across gases using their warming potential.
+    </p>
+
+    <h4>📊 Source</h4>
+    <p><strong>EDGAR GHG v6.0 Dataset</strong></p>
+
+    <hr>
+    <p><strong>📂 Data Source:</strong> EDGAR v6.0 GHG Dataset – European Commission's Joint Research Centre using IPCC 2006 sectoral methodology.</p>
+
+    <hr class="mb-4">
+
+    <h3>📘 Explore GHG Insights</h3>
+    <div class="row">
+        {% for card in cards %}
+        <div class="col-md-6 mb-4">
+            <div class="card border-{{ card.color }}">
+                <div class="card-header bg-{{ card.color }} text-white">
+                    {{ card.title }}
+                </div>
+                <div class="card-body">
+                    <p>{{ card.description }}</p>
+                    <a href="{% url 'dashboard:'|add:card.url %}" class="btn btn-outline-{{ card.color }}">Go to {{ card.title }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

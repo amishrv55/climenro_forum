@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Climenro Forum</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Home Page</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_post' %}">Create Post</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_subreddit' %}">Create Climate Mission</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'news_feed' %}">News & Insights</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'policy_graph:graph_view' %}">Policy Graph</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'policy_graph:add_policy' %}">Add Policy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard:ghg_intro' %}">GHG Insights</a>
+        </li>
+        <li class="nav-item">
+          <form method="get" action="{% url 'search' %}" class="d-flex">
+          <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request.GET.q }}">
+          <button class="btn btn-outline-light" type="submit">Search</button>
+          </form>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none;">Logout</button>
+          </form>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
