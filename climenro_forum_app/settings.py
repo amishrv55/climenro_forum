@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-2^n3970945t$4j^&qqp-2jzuzw-bapdskzq%)o0%p0igpq*hvi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'climenro-forum.onrender.com']
 
 
 # Application definition
