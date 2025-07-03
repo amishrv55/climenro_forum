@@ -3,7 +3,6 @@ Pillow
 pandas
 plotly
 networkx
-os
 openpyxl
 gunicorn
 whitenoise
