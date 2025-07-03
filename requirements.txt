@@ -5,3 +5,7 @@ plotly
 networkx
 os
 openpyxl
+gunicorn
+whitenoise
+psycopg2-binary
+dj-database-url
