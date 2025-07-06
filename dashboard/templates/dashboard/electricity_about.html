@@ -1,0 +1,40 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+  <h2>📄 About This Module</h2>
+
+  <p>This module is part of the <strong>Climenro Climate Intelligence Platform</strong> and provides insights into electricity generation infrastructure using the <strong>Global Power Plant Database</strong> (WRI).</p>
+
+  <h4>🔍 What It Covers:</h4>
+  <ul>
+    <li>National-level generation mix and installed capacity</li>
+    <li>Fuel mix trends and evolution over time</li>
+    <li>Efficiency of generation – actual vs estimated</li>
+    <li>Location-based mapping of plants</li>
+  </ul>
+
+  <h4>🧪 Methodology:</h4>
+  <p>Plant-level data is aggregated by country. Metrics are derived from:</p>
+  <ul>
+    <li><code>capacity_mw</code>, <code>primary_fuel</code>, <code>commissioning_year</code></li>
+    <li><code>generation_gwh</code>, <code>estimated_generation_gwh</code>, <code>latitude</code>, <code>longitude</code></li>
+  </ul>
+
+  <h4>🌍 Significance:</h4>
+  <ul>
+    <li>Helps assess national reliance on fossil vs renewable energy</li>
+    <li>Informs policymakers, researchers, and infrastructure planners</li>
+    <li>Highlights inefficiencies and under-utilized capacity</li>
+  </ul>
+
+  <h4>✅ How to Use:</h4>
+  <ol>
+    <li>Select a <strong>country</strong> from the dropdown on the top of each page</li>
+    <li>Navigate through the views: capacity, mix, efficiency, maps</li>
+    <li>Use visual insights for reporting, planning, or analysis</li>
+  </ol>
+
+  <hr>
+  <p><em>Data Source: Global Power Plant Database, World Resources Institute (WRI)</em></p>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "forum/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">📈 Emission Trends Over Time</h1>
+
+    <form method="get" class="mb-4">
+        <div class="form-group">
+            <label>Select 2–5 Countries to Compare:</label>
+            <select name="countries[]" class="form-control" multiple>
+                {% for c in countries %}
+                    <option value="{{ c }}" {% if c in selected_countries %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+            <small class="form-text text-muted">Hold Ctrl (or Cmd on Mac) to select multiple.</small>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Update Chart</button>
+    </form>
+
+    {% if warning %}
+        <div class="alert alert-warning mt-3">{{ warning }}</div>
+    {% endif %}
+
+    {% if trend_chart %}
+        <div class="mt-4">
+            <img src="data:image/png;base64,{{ trend_chart }}" class="img-fluid rounded shadow">
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

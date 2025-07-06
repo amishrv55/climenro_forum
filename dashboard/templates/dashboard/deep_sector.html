@@ -1,0 +1,44 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2>📊 Cumulative Emissions – Sector Analysis</h2>
+
+    <form method="get" class="row g-3 my-3">
+        <div class="col-md-6">
+            <label for="country">Country:</label>
+            <select name="country" class="form-control">
+                {% for c in countries %}
+                    <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="year">Year:</label>
+            <select name="year" class="form-control">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="text-right mt-3">
+            <button type="submit" class="btn btn-primary">🔄 Update</button>
+        </div>
+    </form>
+
+    <hr class="my-4">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h4>🕔 5-Year</h4>
+            <p><strong>{{ cum_5|floatformat:"0" }} MtCO₂e</strong></p>
+        </div>
+        <div class="col-md-4">
+            <h4>🕙 10-Year</h4>
+            <p><strong>{{ cum_10|floatformat:"0" }} MtCO₂e</strong></p>
+        </div>
+        <div class="col-md-4">
+            <h4>🕒 15-Year</h4>
+            <p><strong>{{ cum_15|floatformat:"0" }} MtCO₂e</strong></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

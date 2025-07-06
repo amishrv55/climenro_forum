@@ -1,9 +1,15 @@
 # Create your views here.
 # dashboard/views.py
+import matplotlib
+matplotlib.use('Agg')  # Disable GUI backend
 from django.shortcuts import render
 import pandas as pd
 import plotly.express as px
 from datetime import datetime
+import matplotlib.pyplot as plt
+import io
+import base64
+from io import BytesIO
 
 from dashboard.scripts.load_edgar import (
     load_edgar_ipcc2006, load_edgar_co2, load_edgar_co2bio,
@@ -479,3 +485,684 @@ def sector_gas_trend_view(request, gas):
 
 def sector_guide_view(request):
     return render(request, "dashboard/sector_guide.html")
+
+
+# dashboard/views.py
+
+from dashboard.scripts.load_edgar import load_edgar_ipcc2006
+from dashboard.scripts.edgar_functions import compare_emission_trends
+
+# Load data once
+df_ar5 = load_edgar_ipcc2006()
+
+def emission_trend_view(request):
+    countries = sorted(df_ar5["Country_code_A3"].dropna().unique())
+    years = sorted(df_ar5["year"].unique(), reverse=True)
+
+    selected_countries = request.GET.getlist("countries[]") or ["IND", "USA", "CHN"]
+
+    trend_chart = None
+    warning = None
+
+    if len(selected_countries) >= 2:
+        trend_df = compare_emission_trends(df_ar5, selected_countries)
+
+        fig, ax = plt.subplots(figsize=(10, 5))
+        for country in selected_countries:
+            if country in trend_df.columns:
+                ax.plot(trend_df.index, trend_df[country], label=country, linewidth=2)
+        ax.set_title("GHG Emission Trends Over Time")
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Emissions (MtCO₂e)")
+        ax.legend()
+        fig.tight_layout()
+
+        buf = BytesIO()
+        fig.savefig(buf, format="png")
+        buf.seek(0)
+        trend_chart = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+    else:
+        warning = "Please select at least 2 countries for comparison."
+
+    return render(request, "dashboard/emission_trend.html", {
+        "countries": countries,
+        "selected_countries": selected_countries,
+        "trend_chart": trend_chart,
+        "warning": warning,
+    })
+
+
+from dashboard.scripts.edgar_functions import compare_sector_by_country
+
+df_ar5 = load_edgar_ipcc2006()
+
+def sector_comparison_view(request):
+    years = sorted(df_ar5["year"].unique(), reverse=True)
+    sectors = sorted(df_ar5["ipcc_code_2006_for_standard_report_name"].dropna().unique())
+
+    selected_year = int(request.GET.get("year", years[0]))
+    selected_sector = request.GET.get("sector", sectors[0])
+
+    # Data filtering and table
+    sector_df = compare_sector_by_country(df_ar5, selected_sector, selected_year).head(10)
+
+    # Generate bar chart
+    chart_base64 = None
+    if not sector_df.empty:
+        fig, ax = plt.subplots(figsize=(8, 5))
+        ax.bar(sector_df["Country_code_A3"], sector_df["emissions_mtco2e"], color="#FFA726")
+        ax.set_ylabel("Emissions (MtCO₂e)")
+        ax.set_title(f"{selected_sector} Emissions – {selected_year}")
+        ax.tick_params(axis='x', rotation=45)
+        fig.tight_layout()
+
+        buf = BytesIO()
+        fig.savefig(buf, format="png")
+        buf.seek(0)
+        chart_base64 = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+
+    return render(request, "dashboard/sector_comparison.html", {
+        "years": years,
+        "sectors": sectors,
+        "selected_year": selected_year,
+        "selected_sector": selected_sector,
+        "sector_df": sector_df,
+        "chart_base64": chart_base64
+    })
+
+# views.py
+
+from dashboard.scripts.edgar_functions import sector_profiles
+
+def sector_radar_view(request):
+    df = load_edgar_ipcc2006()
+    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df["Country_code_A3"].dropna().unique())
+
+    selected_year = int(request.GET.get("year", years[0]))
+    selected_countries = request.GET.getlist("countries") or ["IND", "USA"]
+
+    radar_df = None
+    chart_base64 = None
+
+    if 2 <= len(selected_countries) <= 5:
+        radar_df = sector_profiles(df, selected_countries, selected_year)
+
+        fig, ax = plt.subplots(figsize=(12, 6))
+        radar_df.plot(kind="bar", ax=ax, width=0.8)
+        ax.set_ylabel("Emissions (MtCO₂e)")
+        ax.set_title("Sectoral Emission Profiles")
+        ax.legend(loc='upper right')
+        fig.tight_layout()
+
+        buf = BytesIO()
+        fig.savefig(buf, format="png")
+        buf.seek(0)
+        chart_base64 = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+
+    return render(request, "dashboard/sector_radar.html", {
+        "years": years,
+        "countries": countries,
+        "selected_year": selected_year,
+        "selected_countries": selected_countries,
+        "radar_df": radar_df,  # <- Now checked explicitly in template
+        "chart_base64": chart_base64,
+    })
+
+
+from dashboard.scripts.edgar_functions import stacked_sector_breakdown
+
+def sector_stacked_view(request):
+    df = load_edgar_ipcc2006()
+    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df["Country_code_A3"].dropna().unique())
+    selected_year = int(request.GET.get("year", years[0]))
+    selected_countries = request.GET.getlist("countries") or ["IND", "USA", "CHN"]
+
+    stacked_df = None
+    chart_base64 = None
+
+    if selected_countries:
+        stacked_df = stacked_sector_breakdown(df, selected_countries, selected_year)
+
+        if not stacked_df.empty:
+            # Sort columns by total emission
+            ordered_cols = stacked_df.sum().sort_values(ascending=False).index.tolist()
+            stacked_df = stacked_df[ordered_cols]
+
+            fig, ax = plt.subplots(figsize=(12, 6))
+            stacked_df.plot(kind="bar", stacked=True, ax=ax, colormap="tab20")
+            ax.set_ylabel("Emissions (MtCO₂e)")
+            ax.set_title("Stacked Sector Emissions – Major Contributors on Top")
+            ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize="small")
+            ax.tick_params(axis='x', rotation=0)
+            fig.tight_layout()
+
+            buf = BytesIO()
+            fig.savefig(buf, format="png")
+            buf.seek(0)
+            chart_base64 = base64.b64encode(buf.read()).decode("utf-8")
+            buf.close()
+
+    return render(request, "dashboard/sector_stacked.html", {
+        "years": years,
+        "countries": countries,
+        "selected_year": selected_year,
+        "selected_countries": selected_countries,
+        "stacked_df": stacked_df,
+        "chart_base64": chart_base64,
+    })
+
+def emission_intelligence_view(request):
+    return render(request, "dashboard/emission_intelligence.html")
+
+from dashboard.scripts.load_edgar import load_edgar_ipcc2006, load_population, load_gdp
+from dashboard.scripts.edgar_functions import (
+    cumulative_emissions_n_years,
+    top_growth_countries,
+    compare_country_with_global,
+    compare_sector_with_global,
+    get_per_capita_emission,
+    get_emission_per_gdp
+)
+
+# Load data globally (can cache later)
+df_ar5 = load_edgar_ipcc2006()
+df_pop = load_population()
+df_gdp = load_gdp()
+
+# Intro view
+def deep_intro_view(request):
+    return render(request, "dashboard/deep_intro.html", {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M")})
+
+# Tab 1: Sector Analysis
+def deep_sector_view(request):
+    countries = sorted(df_ar5["Country_code_A3"].dropna().unique())
+    years = sorted(df_ar5["year"].unique(), reverse=True)
+
+    selected_country = request.GET.get("country", "IND")
+    selected_year = int(request.GET.get("year", years[0]))
+
+    cum_5 = cumulative_emissions_n_years(df_ar5, selected_country, selected_year, 5)
+    cum_10 = cumulative_emissions_n_years(df_ar5, selected_country, selected_year, 10)
+    cum_15 = cumulative_emissions_n_years(df_ar5, selected_country, selected_year, 15)
+
+    return render(request, "dashboard/deep_sector.html", {
+        "countries": countries,
+        "years": years,
+        "selected_country": selected_country,
+        "selected_year": selected_year,
+        "cum_5": cum_5,
+        "cum_10": cum_10,
+        "cum_15": cum_15
+    })
+
+# dashboard/views.py (continued from previous setup)
+
+import plotly.express as px
+
+# ------------------------------
+# Tab 2: Growth Rates View
+# ------------------------------
+def deep_growth_view(request):
+    df = load_edgar_ipcc2006()
+    years = sorted(df["year"].unique(), reverse=True)
+    selected_year = int(request.GET.get("year", years[0]))
+
+    growth_charts = {}
+    for n in [5, 10, 15]:
+        top_growth = top_growth_countries(df, selected_year, n)
+        if not top_growth.empty:
+            fig = px.bar(top_growth, x="Country_code_A3", y="growth_rate",
+                         labels={"growth_rate": "Growth (%)"},
+                         title=f"Top 10 Growth Countries – Last {n} Years",
+                         color="growth_rate",
+                         color_continuous_scale="Reds")
+            chart_html = fig.to_html(full_html=False)
+            growth_charts[n] = chart_html
+
+    return render(request, "dashboard/deep_growth.html", {
+        "years": years,
+        "selected_year": selected_year,
+        "growth_charts": growth_charts
+    })
+
+# ------------------------------
+# Tab 3: Country Benchmarking
+# ------------------------------
+def deep_country_benchmark_view(request):
+    countries = sorted(df_ar5["Country_code_A3"].dropna().unique())
+    years = sorted(df_ar5["year"].unique(), reverse=True)
+
+    selected_country = request.GET.get("country", "IND")
+    selected_year = int(request.GET.get("year", years[0]))
+
+    country_val, global_avg = compare_country_with_global(df_ar5, selected_country, selected_year)
+    delta = country_val - global_avg
+    delta_pct = (delta / global_avg) * 100 if global_avg else 0
+
+    return render(request, "dashboard/deep_country_benchmark.html", {
+        "countries": countries,
+        "years": years,
+        "selected_country": selected_country,
+        "selected_year": selected_year,
+        "country_val": country_val,
+        "global_avg": global_avg,
+        "delta": delta,
+        "delta_pct": delta_pct
+    })
+
+# ------------------------------
+# Tab 4: Sector Benchmarking
+# ------------------------------
+def deep_sector_benchmark_view(request):
+    df = load_edgar_ipcc2006()
+    years = sorted(df["year"].unique(), reverse=True)
+    sectors = sorted(df["ipcc_code_2006_for_standard_report_name"].dropna().unique())
+    countries = sorted(df["Country_code_A3"].dropna().unique())
+
+    selected_year = int(request.GET.get("year", years[0]))
+    selected_sector = request.GET.get("sector", sectors[0])
+    selected_country = request.GET.get("country", "IND")
+
+    country_val, global_val = compare_sector_with_global(df, selected_country, selected_sector, selected_year)
+    delta = round(country_val - global_val, 2)
+    delta_pct = round((delta / global_val) * 100, 2) if global_val != 0 else 0
+
+    return render(request, "dashboard/deep_sector_benchmark.html", {
+        "years": years,
+        "sectors": sectors,
+        "countries": countries,
+        "selected_year": selected_year,
+        "selected_sector": selected_sector,
+        "selected_country": selected_country,
+        "country_val": country_val,
+        "global_val": global_val,
+        "delta": delta,
+        "delta_pct": delta_pct,
+    })
+
+# ------------------------------
+# Tab 5: Per Capita and GDP Efficiency
+# ------------------------------
+def deep_percapita_gdp_view(request):
+    df = load_edgar_ipcc2006()
+    df_pop = load_population()
+    df_gdp = load_gdp()
+
+    countries = sorted(df["Country_code_A3"].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_capita = get_per_capita_emission(df, df_pop)
+    df_eff = get_emission_per_gdp(df, df_gdp, df_pop)
+
+    df_country_capita = df_capita[df_capita["Country_code_A3"] == selected_country]
+    df_country_eff = df_eff[df_eff["Country_code_A3"] == selected_country]
+
+    fig_pc = px.line(df_country_capita, x="year", y="per_capita_emission",
+                     title=f"Per Capita Emissions – {selected_country}",
+                     labels={"per_capita_emission": "tCO₂e/person"})
+
+    fig_gdp = px.line(df_country_eff, x="year", y="emission_per_gdp",
+                      title=f"Emissions per GDP – {selected_country}",
+                      labels={"emission_per_gdp": "MtCO₂e per Billion USD"})
+
+    return render(request, "dashboard/deep_percapita_gdp.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "fig_pc": fig_pc.to_html(full_html=False),
+        "fig_gdp": fig_gdp.to_html(full_html=False)
+    })
+
+
+from dashboard.scripts.global_indicators import (
+    load_zonal_temperature_data,
+    load_global_temperature_data,
+    get_global_annual_trend,
+    get_zonal_trend_summary,
+    get_temperature_rate_of_change,
+    get_warming_rate_by_zone,
+    load_sea_level_data,
+    summarize_sea_level_trend,
+    get_sea_level_trend_line,
+    load_gas_data,
+)
+
+# ----------------------
+# 1. Global Temperature Anomalies
+# ----------------------
+def global_temp_anomaly_view(request):
+    df = load_global_temperature_data()
+    df_annual = get_global_annual_trend(df)
+    fig = px.line(df_annual, x="Year", y="Annual", title="Global Annual Temperature Anomaly (1880–Present)", markers=True)
+    chart = fig.to_html(full_html=False)
+    return render(request, "dashboard/global_temp_anomaly.html", {"chart": chart})
+
+# ----------------------
+# 2. Zonal Summary Table
+# ----------------------
+def global_zonal_summary_view(request):
+    df = load_zonal_temperature_data()
+    df_summary = get_zonal_trend_summary(df)
+    return render(request, "dashboard/global_zonal_summary.html", {"df_table": df_summary.to_html(classes="table table-bordered", index=False)})
+
+# ----------------------
+# 3. Global Warming Rate
+# ----------------------
+def warming_rate_view(request):
+    df = load_zonal_temperature_data()
+    rate, p_value = get_temperature_rate_of_change(df)
+    zonal_cols = ["Glob", "NHem", "SHem", "24N-90N", "24S-24N", "90S-24S", "64N-90N", "44N-64N", "24N-44N", "EQU-24N", "24S-EQU", "44S-24S", "64S-44S", "90S-64S"]
+    zone_df = get_warming_rate_by_zone(df, zonal_cols)
+    fig = px.bar(zone_df, x="zone_name", y="rate_per_decade", title="Warming Rate by Zone", color="rate_per_decade", color_continuous_scale="Plasma")
+    chart = fig.to_html(full_html=False)
+    return render(request, "dashboard/warming_rate.html", {"rate": round(rate, 4), "p_value": round(p_value, 4), "chart": chart})
+
+# ----------------------
+# 4. Equator vs Poles
+# ----------------------
+def equator_vs_poles_view(request):
+    df = load_zonal_temperature_data()
+    trend_zones = {
+        "Equator (24S–24N)": "24S-24N",
+        "Mid-North (24N–44N)": "24N-44N",
+        "Mid-South (44S–24S)": "44S-24S",
+        "North Pole (64N–90N)": "64N-90N",
+        "South Pole (90S–64S)": "90S-64S"
+    }
+    fig = px.line(df, x="Year", y=[df[z] for z in trend_zones.values()], title="Temperature Anomalies: Equator vs Poles")
+    for idx, (label, _) in enumerate(trend_zones.items()):
+        fig.data[idx].name = label
+    chart = fig.to_html(full_html=False)
+    return render(request, "dashboard/equator_vs_poles.html", {"chart": chart})
+
+# ----------------------
+# 5. Sea Level View
+# ----------------------
+def sea_level_view(request):
+    try:
+        df = load_sea_level_data()
+        summary = summarize_sea_level_trend(df)
+        trend_df = get_sea_level_trend_line(df)
+        fig = px.line(trend_df, x="time", y="sea_level_anomaly", title="Global Sea Level Anomaly")
+        chart = fig.to_html(full_html=False)
+        return render(request, "dashboard/sea_level.html", {
+            "rate": round(summary["rate_mm_per_year"], 2),
+            "total": round(summary["total_rise_mm"], 2),
+            "start": summary["start_year"],
+            "end": summary["end_year"],
+            "chart": chart
+        })
+    except Exception as e:
+        return render(request, "dashboard/sea_level.html", {"error": str(e)})
+
+# ----------------------
+# 6. Gas Concentration Views
+# ----------------------
+def gas_concentration_view(request, gas):
+    gas_map = {
+        "co2": ("co2_mm_gl.csv", "CO₂", "ppm"),
+        "ch4": ("ch4_mm_gl.csv", "CH₄", "ppb"),
+        "n2o": ("n2o_mm_gl.csv", "N₂O", "ppb"),
+        "sf6": ("sf6_mm_gl.csv", "SF₆", "ppt")
+    }
+    if gas not in gas_map:
+        return render(request, "dashboard/error.html", {"message": "Invalid gas"})
+
+    filename, label, unit = gas_map[gas]
+    df = load_gas_data(filename)
+
+    fig1 = px.line(df, x="datetime", y="average", title=f"{label} – Global Monthly Average", labels={"average": f"{label} ({unit})"})
+    fig2 = px.box(df, x="month", y="average", title=f"{label} – Monthly Seasonality", points="all")
+    df_month = df.groupby("month")["average"].mean().reset_index()
+    fig3 = px.line(df_month, x="month", y="average", title=f"{label} – Avg by Month")
+
+    return render(request, "dashboard/gas_concentration.html", {
+        "label": label,
+        "unit": unit,
+        "fig1": fig1.to_html(full_html=False),
+        "fig2": fig2.to_html(full_html=False),
+        "fig3": fig3.to_html(full_html=False)
+    })
+
+def global_trends_home(request):
+    return render(request, "dashboard/global_trends.html")
+
+
+from dashboard.scripts.electricity_insights import (
+    load_power_plant_data,
+    get_country_plant_data,
+    get_total_capacity,
+    get_fuel_mix_distribution,
+    get_fuel_capacity_distribution,
+    get_location_map_df,
+    capacity_over_time,
+    average_capacity_by_fuel,
+    generation_efficiency,
+    fuel_mix_over_time,
+)
+
+def electricity_intro_view(request):
+    return render(request, "dashboard/electricity_intro.html")
+
+def electricity_summary_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df['country'].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_country = get_country_plant_data(df, selected_country)
+    total_capacity = get_total_capacity(df_country)
+
+    table_html = df_country[["name", "capacity_mw", "primary_fuel", "commissioning_year"]] \
+        .sort_values(by="capacity_mw", ascending=False) \
+        .to_html(classes="table table-bordered table-striped", index=False)
+
+    return render(request, "dashboard/electricity_summary.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "total_capacity": f"{total_capacity:,.2f}",
+        "table_html": table_html
+    })
+
+import plotly.express as px
+
+def electricity_fuel_mix_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df['country'].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_country = get_country_plant_data(df, selected_country)
+
+    fuel_mix_pct = get_fuel_mix_distribution(df_country)
+    fuel_mix_cap = get_fuel_capacity_distribution(df_country)
+
+    # Pie Chart for plant count distribution
+    fig1 = px.pie(
+        fuel_mix_pct,
+        names="Fuel_Type",     # Correct name column
+        values="proportion",   # Correct numerical value column
+        title="Fuel Mix – Plant Count (%)"
+        )
+        
+    # Bar Chart for installed capacity by fuel
+    fig2 = px.bar(
+        fuel_mix_cap,
+        x="primary_fuel",
+        y="capacity_mw",
+        title="Fuel Mix – Installed Capacity (MW)",
+        labels={"capacity_mw": "MW", "primary_fuel": "Fuel"},
+        text_auto=".2s"
+    )
+
+    return render(request, "dashboard/electricity_fuel_mix.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "fig1": fig1.to_html(full_html=False),
+        "fig2": fig2.to_html(full_html=False)
+    })
+
+
+def electricity_map_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df['country'].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_country = get_country_plant_data(df, selected_country)
+    map_df = get_location_map_df(df_country)
+
+    fig = px.scatter_mapbox(
+        map_df,
+        lat="latitude",
+        lon="longitude",
+        color="primary_fuel",
+        size="capacity_mw",
+        hover_name="name",
+        zoom=3,
+        height=600,
+        mapbox_style="open-street-map",
+        title=f"📍 Power Plants in {selected_country}"
+    )
+
+    chart = fig.to_html(full_html=False)
+
+    return render(request, "dashboard/electricity_map.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "chart": chart
+    })
+
+
+def electricity_capacity_trend_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df["country"].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_country = get_country_plant_data(df, selected_country)
+    cap_time_df = capacity_over_time(df_country)
+
+    fig = px.line(
+        cap_time_df,
+        x="commissioning_year",
+        y="capacity_mw",
+        title=f"📈 Installed Capacity Over Time – {selected_country}",
+        markers=True,
+        labels={"commissioning_year": "Year", "capacity_mw": "MW"},
+        height=500
+    )
+
+    chart = fig.to_html(full_html=False)
+
+    return render(request, "dashboard/electricity_capacity_trend.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "chart": chart
+    })
+
+
+def electricity_avg_capacity_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df["country"].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_country = get_country_plant_data(df, selected_country)
+    avg_df = average_capacity_by_fuel(df_country)
+
+    fig = px.bar(
+        avg_df,
+        x="primary_fuel",
+        y="avg_capacity_mw",
+        title=f"📊 Average Plant Capacity by Fuel – {selected_country}",
+        labels={"primary_fuel": "Fuel Type", "avg_capacity_mw": "MW"},
+        height=500
+    )
+
+    chart = fig.to_html(full_html=False)
+
+    return render(request, "dashboard/electricity_avg_capacity.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "chart": chart
+    })
+
+def electricity_efficiency_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df["country"].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+    all_years = [2013, 2014, 2015, 2016, 2017]
+
+    df_country = get_country_plant_data(df, selected_country)
+
+    # Filter years for which both columns exist and contain data
+    available_years = [
+        y for y in all_years
+        if f"generation_gwh_{y}" in df_country.columns and
+           f"estimated_generation_gwh_{y}" in df_country.columns and
+           not df_country[[f"generation_gwh_{y}", f"estimated_generation_gwh_{y}"]].dropna().empty
+    ]
+
+    # Fallback: if no data, use full list
+    if not available_years:
+        available_years = all_years
+
+    selected_year = int(request.GET.get("year", available_years[0]))
+
+    chart = None
+    table_html = None
+
+    try:
+        gen_df = generation_efficiency(df_country, year=selected_year)
+        if not gen_df.empty:
+            fig = px.scatter(
+                gen_df,
+                x=f"estimated_generation_gwh_{selected_year}",
+                y=f"generation_gwh_{selected_year}",
+                color="primary_fuel",
+                size="utilization_ratio",
+                hover_name="name",
+                title=f"Generation Efficiency – {selected_year}"
+            )
+            chart = fig.to_html(full_html=False)
+            table_html = gen_df.to_html(classes="table table-striped", index=False)
+    except Exception:
+        pass
+
+    return render(request, "dashboard/electricity_efficiency.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "selected_year": selected_year,
+        "years": available_years,
+        "chart": chart,
+        "table_html": table_html,
+    })
+
+
+def electricity_fuel_mix_time_view(request):
+    df = load_power_plant_data()
+    countries = sorted(df["country"].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+
+    df_country = get_country_plant_data(df, selected_country)
+    mix_df = fuel_mix_over_time(df_country)
+
+    fig = px.area(
+        mix_df,
+        x="commissioning_year",
+        y="capacity_mw",
+        color="primary_fuel",
+        title=f"📊 Fuel Mix Evolution Over Time – {selected_country}",
+        labels={"commissioning_year": "Year", "capacity_mw": "MW", "primary_fuel": "Fuel"}
+    )
+
+    chart = fig.to_html(full_html=False)
+
+    return render(request, "dashboard/electricity_fuel_mix_time.html", {
+        "countries": countries,
+        "selected_country": selected_country,
+        "chart": chart,
+    })
+
+def electricity_about_view(request):
+    return render(request, "dashboard/electricity_about.html")

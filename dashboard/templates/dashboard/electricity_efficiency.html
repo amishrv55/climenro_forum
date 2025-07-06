@@ -1,0 +1,33 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+  <h2>⚙️ Generation Efficiency – Actual vs Estimated</h2>
+
+  <form method="get" class="form-inline mb-4">
+    <label class="mr-2">🌍 Country:</label>
+    <select name="country" class="form-control mr-3">
+      {% for c in countries %}
+        <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+
+    <label class="mr-2">📅 Year:</label>
+    <select name="year" class="form-select">
+  {% for y in years %}
+    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+  {% endfor %}
+    </select>
+
+
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+
+  {% if chart %}
+    <div class="my-4">{{ chart|safe }}</div>
+    <h4 class="mt-4">📊 Plant-Level Efficiency Table</h4>
+    <div class="table-responsive">{{ table_html|safe }}</div>
+  {% else %}
+    <div class="alert alert-warning">⚠️ Not enough data available for the selected year or country.</div>
+  {% endif %}
+</div>
+{% endblock %}

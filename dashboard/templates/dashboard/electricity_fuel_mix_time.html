@@ -1,0 +1,20 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+  <h2>📊 Fuel Mix Evolution Over Time</h2>
+
+  <form method="get" class="form-inline mb-4">
+    <label class="mr-2">🌍 Country:</label>
+    <select name="country" class="form-control mr-3">
+      {% for c in countries %}
+        <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+
+  <div class="my-4">
+    {{ chart|safe }}
+  </div>
+</div>
+{% endblock %}

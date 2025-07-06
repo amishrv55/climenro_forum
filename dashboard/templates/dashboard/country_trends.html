@@ -1,0 +1,44 @@
+{% extends "forum/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+
+    <h2>📈 Country Emission Trends</h2>
+
+    <form method="get" class="form-inline mb-4">
+        <label>📅 Year:</label>
+        <select name="year" class="form-control mx-2">
+            {% for year in years %}
+                <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+
+        <label>🌍 Countries:</label>
+        <select name="countries" multiple class="form-control mx-2">
+            {% for c in countries %}
+                <option value="{{ c }}" {% if c in selected_countries %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-primary ml-3">Update</button>
+    </form>
+
+    {% if chart %}
+        <div class="my-4">
+            <img src="data:image/png;base64,{{ chart }}" class="img-fluid shadow" />
+        </div>
+    {% else %}
+        <div class="alert alert-warning">Please select at least 2 countries to compare trends.</div>
+    {% endif %}
+
+    {% if table_df %}
+        <hr>
+        <h5>🔢 Underlying Data</h5>
+        <div class="table-responsive">
+            {{ table_df|safe }}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

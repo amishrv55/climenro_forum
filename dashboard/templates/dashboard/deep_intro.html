@@ -1,0 +1,28 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+    <h1>🔍 Deep Emissions Insights & Benchmarks</h1>
+    <p class="lead">Explore multi-dimensional emission metrics like cumulative emissions, sector benchmarks, growth trends, per capita emissions, and efficiency indicators.</p>
+    <p class="text-muted">Last updated: {{ last_updated }}</p>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'dashboard:deep_sector' %}" class="btn btn-outline-primary w-100">📊 Sector Analysis</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'dashboard:deep_growth' %}" class="btn btn-outline-danger w-100">📈 Growth Trends</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'dashboard:deep_country_benchmark' %}" class="btn btn-outline-success w-100">📏 Country Benchmark</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'dashboard:deep_sector_benchmark' %}" class="btn btn-outline-secondary w-100">🌍 Sector Benchmark</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'dashboard:deep_percapita_gdp' %}" class="btn btn-outline-dark w-100">👥 Per Capita & GDP</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

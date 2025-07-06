@@ -1,0 +1,23 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>📈 Global Warming Rate Per Decade</h2>
+
+  <div class="my-3">
+    <p><strong>Estimated Rate:</strong> {{ rate }} °C/decade</p>
+    <p><strong>p-value:</strong> {{ p_value }}</p>
+
+    {% if p_value < 0.01 %}
+      <div class="alert alert-success">✅ Statistically significant warming trend.</div>
+    {% else %}
+      <div class="alert alert-warning">⚠️ Trend not statistically significant.</div>
+    {% endif %}
+  </div>
+
+  <hr>
+
+  <div id="temp-rate-chart" class="my-4">
+    {{ chart|safe }}
+  </div>
+</div>
+{% endblock %}

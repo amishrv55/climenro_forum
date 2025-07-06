@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🌡️ Global Annual Temperature Anomalies</h2>
+  <p class="text-muted">Based on GISTEMP dataset (1880–present)</p>
+  <hr>
+  <div class="my-4">
+    {{ chart|safe }}
+  </div>
+</div>
+{% endblock %}

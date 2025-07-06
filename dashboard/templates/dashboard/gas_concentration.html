@@ -1,0 +1,46 @@
+{% extends "forum/base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>🟢 {{ label }} Concentration Trends</h2>
+  <p class="text-muted">
+    Visualizing the monthly average concentration, seasonal pattern, and long-term monthly mean of {{ label }} in the atmosphere. Unit: <strong>{{ unit }}</strong>.
+  </p>
+
+  <hr class="my-4">
+
+  <!-- Line Chart -->
+  <section class="mb-5">
+    <h4>📈 Monthly Average Concentration Over Time</h4>
+    <div class="chart-container">
+      {{ fig1|safe }}
+    </div>
+  </section>
+
+  <hr class="my-4">
+
+  <!-- Boxplot -->
+  <section class="mb-5">
+    <h4>📊 Monthly Seasonality Distribution</h4>
+    <div class="chart-container">
+      {{ fig2|safe }}
+    </div>
+  </section>
+
+  <hr class="my-4">
+
+  <!-- Monthly Average Line -->
+  <section class="mb-5">
+    <h4>📅 Mean Concentration by Month</h4>
+    <div class="chart-container">
+      {{ fig3|safe }}
+    </div>
+  </section>
+
+  <hr>
+  <div class="text-muted">
+    <small>Data Source: NOAA Global Monitoring Laboratory</small>
+  </div>
+</div>
+
+{% endblock %}

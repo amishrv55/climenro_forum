@@ -1,0 +1,66 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+  <h2>📏 Sector Benchmark – Country vs Global</h2>
+
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+      <label>Country:</label>
+      <select name="country" class="form-control">
+        {% for c in countries %}
+          <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label>Sector:</label>
+      <select name="sector" class="form-control">
+        {% for s in sectors %}
+          <option value="{{ s }}" {% if s == selected_sector %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label>Year:</label>
+      <select name="year" class="form-control">
+        {% for y in years %}
+          <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary w-100">🔍 Compare</button>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5>Country Emission</h5>
+          <p class="display-6">{{ country_val }} MtCO₂e</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5>Global Sector Avg</h5>
+          <p class="display-6">{{ global_val }} MtCO₂e</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5>Difference</h5>
+          <p class="display-6">{{ delta }} MtCO₂e ({{ delta_pct }}%)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "forum/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">🌍 Emission Intelligence</h1>
+    <p class="lead">Explore greenhouse gas emissions with powerful visual insights across countries, sectors, and gases. This dashboard provides three key modules:</p>
+
+    <hr class="my-4">
+
+    <!-- Module 1: GHG Emissions and Sector Insights -->
+    <section class="mb-5">
+        <h3>📘 Module 1: GHG Emissions & Sectoral Insights</h3>
+        <p>This module allows users to explore GHG emissions trends, sectoral contributions, and top emitters for a specific country.</p>
+        <ul>
+            <li>📋 <strong>Country Summary</strong>: Summary of CO₂, CH₄, N₂O emissions with global rank</li>
+            <li>📈 <strong>Emission Trends</strong>: GHG trend over time for selected country</li>
+            <li>🟦🟩🟥 <strong>Gas-specific Emission Views</strong>: Fossil CO₂, Bio CO₂, CH₄, N₂O with top sectors</li>
+        </ul>
+        <a href="{% url 'dashboard:ghg_intro' %}" class="btn btn-outline-primary mt-2">Go to Module 1</a>
+    </section>
+
+    <!-- Module 2: Sector-wise Emission Comparison -->
+    <section class="mb-5">
+        <h3>🏭 Module 2: Sector-Wise Emission Insights</h3>
+        <p>This module compares GHGs across economic sectors, countries, and gases using IPCC 2006 classification.</p>
+        <ul>
+            <li>🔍 <strong>Sector Summary</strong>: Summary of emissions and ranks by sector</li>
+            <li>📈 <strong>Gas-wise Trends</strong>: Emissions trend by gas for a sector</li>
+            <li>📘 <strong>Sector Activity Guide</strong>: Understanding emission sources by sector</li>
+        </ul>
+        <a href="{% url 'dashboard:sector_summary' %}" class="btn btn-outline-success mt-2">Go to Module 2</a>
+    </section>
+
+    <!-- Module 3: Country Comparisons -->
+    <section class="mb-5">
+        <h3>🌐 Module 3: Country Comparisons</h3>
+        <p>This module enables users to compare emission trends, sector-wise outputs, and stacked sector breakdowns across countries.</p>
+        <ul>
+            <li>📈 <strong>Emission Trends</strong>: Compare total GHG emissions over time for multiple countries</li>
+            <li>🏭 <strong>Sector Comparison</strong>: Sector-specific emission comparison across countries</li>
+            <li>📊 <strong>Sectoral Profiles</strong>: Country-wise emission distribution by sectors (Radar)</li>
+            <li>📊 <strong>Stacked Sector Breakdown</strong>: Country-wise stacked sectoral emissions</li>
+            <li>📊 <strong>Deep Insights</strong>: Deep Insights into Country-wise and Sectoral Benchmarks</li>
+        </ul>
+
+        <div class="d-flex flex-wrap gap-2 mt-2">
+            <a href="{% url 'dashboard:emission_trend' %}" class="btn btn-outline-dark">📈 Emission Trend</a>
+            <a href="{% url 'dashboard:sector_comparison' %}" class="btn btn-outline-dark">🏭 Sector Comparison</a>
+            <a href="{% url 'dashboard:sector_radar' %}" class="btn btn-outline-dark">📊 Radar Profiles</a>
+            <a href="{% url 'dashboard:sector_stacked' %}" class="btn btn-outline-dark">📊 Stacked Sectors</a>
+            <a href="{% url 'dashboard:deep_intro' %}" class="btn btn-outline-dark">📊 Deep Insights & Benchmarks</a>
+        </div>
+    </section>
+
+    <hr>
+    <p class="text-muted">📂 Data Source: EDGAR v6.0 GHG Dataset | Methodology: IPCC 2006 Sectoral Classification</p>
+</div>
+{% endblock %}

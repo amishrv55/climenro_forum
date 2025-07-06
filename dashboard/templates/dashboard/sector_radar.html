@@ -1,0 +1,50 @@
+{% extends "forum/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h2>📊 Sectoral Profiles by Country (Radar)</h2>
+
+    <!-- Form -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label>📅 Year:</label>
+            <select name="year" class="form-control">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-8">
+            <label>🌍 Select 2–5 Countries:</label>
+            <select name="countries" class="form-control" multiple>
+                {% for c in countries %}
+                    <option value="{{ c }}" {% if c in selected_countries %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">🔄 Update</button>
+        </div>
+    </form>
+
+    <hr class="my-4">
+
+    <!-- Result Section -->
+    {% if radar_df is not None %}
+        <div class="table-responsive mb-4">
+            {{ radar_df.to_html|safe }}
+        </div>
+
+        {% if chart_base64 %}
+            <img src="data:image/png;base64,{{ chart_base64 }}" class="img-fluid shadow">
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            Please select 2–5 countries to view radar comparison.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

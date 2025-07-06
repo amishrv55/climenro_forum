@@ -1,0 +1,49 @@
+{% extends "forum/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+
+    <h2>🏭 Sector Emissions Comparison by Country</h2>
+
+    <form method="get" class="my-4 row g-3">
+        <div class="col-md-6">
+            <label>📅 Year:</label>
+            <select name="year" class="form-control">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label>🏭 Sector:</label>
+            <select name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option value="{{ s }}" {% if s == selected_sector %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">🔄 Update</button>
+        </div>
+    </form>
+
+    <hr class="my-4">
+
+    {% if not sector_df.empty %}
+        <h4>📊 Top 10 Emitters – {{ selected_sector }} in {{ selected_year }}</h4>
+        <div class="table-responsive mb-4">
+            {{ sector_df.to_html|safe }}
+        </div>
+
+        {% if chart_base64 %}
+            <img src="data:image/png;base64,{{ chart_base64 }}" class="img-fluid shadow">
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">No data available for this sector in {{ selected_year }}.</div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,10 +1,10 @@
-django
+Django>=5.0
 Pillow
 pandas
 plotly
 networkx
 openpyxl
-gunicorn
-whitenoise
-psycopg2-binary
-dj-database-url
+matplotlib
+scipy
+xarray
+xlrd

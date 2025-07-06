@@ -1,0 +1,36 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">🔌 Electricity Infrastructure – Country Insights</h1>
+  <p class="lead">Track generation mix, capacity growth, and grid infrastructure per country.</p>
+
+  <hr class="my-4">
+
+  <h4>📘 Module Overview</h4>
+  <p>This module provides <strong>deep insights into the electricity generation infrastructure</strong> of a country using plant-level data.</p>
+
+  <ul>
+    <li>Total installed capacity</li>
+    <li>Fuel mix and share by source</li>
+    <li>Capacity growth and trends</li>
+    <li>Efficiency and plant performance</li>
+    <li>Location-based mapping</li>
+  </ul>
+
+  <h4 class="mt-4">🌍 Significance</h4>
+  <p>This dashboard helps researchers, energy planners, and investors understand the readiness and transition needs in national power infrastructure.</p>
+
+  <hr class="my-4">
+
+  <div class="d-grid gap-2">
+    <a href="{% url 'dashboard:electricity_summary_view' %}" class="btn btn-outline-primary">📊 Summary & Capacity</a>
+    <a href="{% url 'dashboard:electricity_fuel_mix_view' %}" class="btn btn-outline-primary">🧯 Fuel Mix</a>
+    <a href="{% url 'dashboard:electricity_map_view' %}" class="btn btn-outline-primary">🗺️ Plant Map</a>
+    <a href="{% url 'dashboard:electricity_capacity_trend_view' %}" class="btn btn-outline-primary">📈 Capacity Over Time</a>
+    <a href="{% url 'dashboard:electricity_avg_capacity_view' %}" class="btn btn-outline-primary">📊 Avg Capacity by Fuel</a>
+    <a href="{% url 'dashboard:electricity_efficiency_view' %}" class="btn btn-outline-primary">⚙️ Efficiency</a>
+    <a href="{% url 'dashboard:electricity_fuel_mix_time_view' %}" class="btn btn-outline-primary">📊 Fuel Mix Over Time</a>
+    <a href="{% url 'dashboard:electricity_about_view' %}" class="btn btn-outline-secondary">📄 About</a>
+  </div>
+</div>
+{% endblock %}

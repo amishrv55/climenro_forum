@@ -8,32 +8,63 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
+
+        <!-- Home -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'home' %}">Home Page</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'create_post' %}">Create Post</a>
+
+        <!-- Forum Creation Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="forumDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Forum Creation
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="forumDropdown">
+            <li><a class="dropdown-item" href="{% url 'create_post' %}">Create Post</a></li>
+            <li><a class="dropdown-item" href="{% url 'create_subreddit' %}">Create Climate Mission</a></li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'create_subreddit' %}">Create Climate Mission</a>
+
+        <!-- Policy Intelligence Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Policy Intelligence
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="policyDropdown">
+            <li><a class="dropdown-item" href="{% url 'policy_graph:graph_view' %}">Policy Graph</a></li>
+            <li><a class="dropdown-item" href="{% url 'policy_graph:add_policy' %}">Add Policy</a></li>
+          </ul>
         </li>
+
+        <!-- News & Insights -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'news_feed' %}">News & Insights</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'policy_graph:graph_view' %}">Policy Graph</a></li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'policy_graph:add_policy' %}">Add Policy</a>
+
+        <!-- Data and Dashboards Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Data and Dashboards
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
+            <li><a class="dropdown-item" href="{% url 'dashboard:emission_intelligence' %}">Emission Intelligence</a></li>
+            <li><a class="dropdown-item" href="{% url 'dashboard:deep_intro' %}">Deep Insights</a></li>
+            <li><a class="dropdown-item" href="{% url 'dashboard:global_trends_home' %}">Global Trends</a></li>
+            <li><a class="dropdown-item" href="{% url 'dashboard:electricity_intro_view' %}">Electricity Intro</a></li>
+          </ul>
         </li>
+
+        <!-- Search -->
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'dashboard:ghg_intro' %}">GHG Insights</a>
-        </li>
-        <li class="nav-item">
-          <form method="get" action="{% url 'search' %}" class="d-flex">
-          <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request.GET.q }}">
-          <button class="btn btn-outline-light" type="submit">Search</button>
+          <form method="get" action="{% url 'search' %}" class="d-flex ms-2">
+            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request.GET.q }}">
+            <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
         </li>
+
       </ul>
+
+      <!-- Auth Buttons -->
       <ul class="navbar-nav ms-auto">
         {% if user.is_authenticated %}
           <li class="nav-item">
@@ -41,9 +72,9 @@
           </li>
           <li class="nav-item">
             <form method="post" action="{% url 'logout' %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none;">Logout</button>
-          </form>
+              {% csrf_token %}
+              <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none;">Logout</button>
+            </form>
           </li>
         {% else %}
           <li class="nav-item">

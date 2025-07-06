@@ -1,0 +1,18 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🧭 Equator vs Poles – Temperature Anomalies</h2>
+  <p class="text-muted">
+    This chart compares the surface temperature anomalies across various latitudinal zones, helping visualize the disparity in warming between the equator and the poles.
+  </p>
+  <hr>
+
+  <div class="my-4">
+    {{ chart|safe }}
+  </div>
+
+  <div class="alert alert-info mt-4">
+    <strong>Note:</strong> Polar regions, especially the Arctic, are warming significantly faster than the global average.
+  </div>
+</div>
+{% endblock %}
