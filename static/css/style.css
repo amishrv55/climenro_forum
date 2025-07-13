@@ -1,0 +1,125 @@
+/* === Variables and Core Styles === */
+:root {
+    --climenro-dark: #0a2e38;
+    --climenro-medium: #1a4b5a;
+    --climenro-accent: #4db6ac;
+    --climenro-light: #e0f7fa;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === Utility === */
+#round {
+    border-radius: 5%;
+}
+
+/* === Navbar === */
+.navbar {
+    background-color: var(--climenro-dark);
+}
+.navbar .nav-link,
+.navbar-brand {
+    color: white !important;
+}
+.navbar .nav-link:hover {
+    color: var(--climenro-accent) !important;
+}
+
+/* === Footer === */
+footer {
+    background: linear-gradient(135deg, var(--climenro-dark) 0%, var(--climenro-medium) 100%);
+    border-top: 1px solid rgba(224, 247, 250, 0.1);
+    color: white;
+}
+
+.footer-links a {
+    color: var(--climenro-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 2px;
+    font-size: 0.95rem;
+}
+.footer-links a:hover {
+    color: var(--climenro-accent);
+}
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--climenro-accent);
+    transition: width 0.3s ease;
+}
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+/* === Social Icons === */
+.social-icon {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(224, 247, 250, 0.1);
+    border-radius: 50%;
+    margin-right: 8px;
+    color: white;
+    transition: all 0.3s ease;
+}
+.social-icon:hover {
+    background-color: var(--climenro-accent);
+    color: var(--climenro-dark);
+    transform: translateY(-3px);
+}
+
+/* === Buttons === */
+.btn-footer {
+    border: 1px solid var(--climenro-accent);
+    color: var(--climenro-accent);
+    transition: all 0.3s ease;
+}
+.btn-footer:hover {
+    background-color: var(--climenro-accent);
+    color: var(--climenro-dark);
+}
+
+/* === Section Styling === */
+section {
+    padding: 60px 0;
+}
+
+/* === Headings === */
+h1, h2, h3, h4, h5 {
+    font-weight: 600;
+}
+
+/* === Tables (for dashboard, summary) === */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* === Responsive Helpers === */
+@media (max-width: 768px) {
+    footer .row > div {
+        text-align: center;
+    }
+    .navbar .navbar-collapse {
+        background-color: var(--climenro-dark);
+    }
+}
