@@ -106,8 +106,8 @@ def ghg_trend_view(request):
 
 
 def co2_emission_view(request):
-    countries = sorted(df["Country_code_A3"].unique())
-    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df_co2["Country_code_A3"].unique())
+    years = sorted(df_co2["year"].unique(), reverse=True)
 
     selected_country = request.GET.get("country", "IND")
     selected_year = int(request.GET.get("year", years[0]))
@@ -152,8 +152,8 @@ def co2_emission_view(request):
 
 
 def co2_bio_view(request):
-    countries = sorted(df["Country_code_A3"].unique())
-    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df_co2bio["Country_code_A3"].unique())
+    years = sorted(df_co2bio["year"].unique(), reverse=True)
 
     selected_country = request.GET.get("country", "IND")
     selected_year = int(request.GET.get("year", years[0]))
@@ -198,8 +198,8 @@ def co2_bio_view(request):
 
 
 def total_co2_view(request):
-    countries = sorted(df["Country_code_A3"].unique())
-    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df_combined["Country_code_A3"].unique())
+    years = sorted(df_combined["year"].unique(), reverse=True)
 
     selected_country = request.GET.get("country", "IND")
     selected_year = int(request.GET.get("year", years[0]))
@@ -246,8 +246,8 @@ def total_co2_view(request):
 
 
 def ch4_emissions_view(request):
-    countries = sorted(df["Country_code_A3"].unique())
-    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df_ch4["Country_code_A3"].unique())
+    years = sorted(df_ch4["year"].unique(), reverse=True)
 
     selected_country = request.GET.get("country", "IND")
     selected_year = int(request.GET.get("year", years[0]))
@@ -292,8 +292,8 @@ def ch4_emissions_view(request):
 
 
 def n2o_emissions_view(request):
-    countries = sorted(df["Country_code_A3"].unique())
-    years = sorted(df["year"].unique(), reverse=True)
+    countries = sorted(df_n2o["Country_code_A3"].unique())
+    years = sorted(df_n2o["year"].unique(), reverse=True)
 
     selected_country = request.GET.get("country", "IND")
     selected_year = int(request.GET.get("year", years[0]))
