@@ -5,6 +5,8 @@ import pandas as pd
 from datetime import datetime
 import plotly.graph_objects as go
 import networkx as nx
+import fitz
+from django.conf import settings
 
 activity_df = load_activity_table()
 country_df = load_country_factors()
@@ -191,3 +193,35 @@ def graph_view(request):
         'current_intent': intent_filter,
         'current_country': country_filter
     })
+
+
+import os
+
+
+
+def extract_text_from_pdf(pdf_path):
+    text = ""
+    with fitz.open(pdf_path) as doc:
+        for page in doc:
+            text += page.get_text()
+    return text.strip()
+
+def upload_policy_pdf(request):
+    if request.method == "POST" and request.FILES.get("policy_pdf"):
+        uploaded_file = request.FILES["policy_pdf"]
+        file_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
+
+        # Save file temporarily
+        with open(file_path, 'wb+') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+
+        # Extract & clean PDF content
+        extracted_text = extract_text_from_pdf(file_path)
+
+        return render(request, "policy_graph/upload_result.html", {
+            "extracted_text": extracted_text,
+            "filename": uploaded_file.name
+        })
+
+    return render(request, "policy_graph/upload_form.html")

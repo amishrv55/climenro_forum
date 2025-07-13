@@ -8,7 +8,7 @@ import plotly.express as px
 from datetime import datetime
 import matplotlib.pyplot as plt
 import io
-import base64
+import base64, urllib
 from io import BytesIO
 
 from dashboard.scripts.load_edgar import (
@@ -1166,3 +1166,230 @@ def electricity_fuel_mix_time_view(request):
 
 def electricity_about_view(request):
     return render(request, "dashboard/electricity_about.html")
+
+
+# dashboard/views.py
+
+import os
+
+from django.conf import settings
+
+DATA_PATH = os.path.join(settings.BASE_DIR, 'data')
+
+from dashboard.scripts.owid_functions import (
+    renewable_share_over_time,
+    renewable_source_breakdown,
+    top_countries_by_renewable,
+    fastest_growth_in_renewables,
+    electricity_mix,
+)
+
+# Load OWID data (cached in memory for all views)
+
+df_owid = pd.read_csv(os.path.join(DATA_PATH, "owid-energy-data.csv"))
+
+def renewable_intro_view(request):
+    return render(request, "dashboard/renewable_intro.html")
+
+# dashboard/views.py (additional views for renewable module)
+
+# 1. Trend over time
+
+def renewable_trend_view(request):
+    countries = sorted(df_owid["iso_code"].dropna().unique())
+    selected_country = request.GET.get("country", "IND")
+    trend = renewable_share_over_time(df_owid, selected_country)
+
+    chart = None
+    if not trend.empty:
+        fig = px.line(trend, x="year", y="renewables_share_energy",
+                      title=f"Renewable Energy Share Over Time – {selected_country}",
+                      labels={"renewables_share_energy": "Renewable Share (%)", "year": "Year"})
+        chart = fig.to_html(full_html=False)
+
+    context = {
+        "countries": countries,
+        "selected_country": selected_country,
+        "chart": chart,  # <-- pass this
+    }
+    return render(request, "dashboard/renewable_trend.html", context)
+
+# 2. Source Breakdown
+
+def renewable_source_breakdown_view(request):
+    countries = sorted(df_owid["iso_code"].dropna().unique())
+    years = sorted(df_owid["year"].dropna().unique(), reverse=True)
+    selected_country = request.GET.get("country", "IND")
+    selected_year = int(request.GET.get("year", max(years)))
+
+    share = renewable_source_breakdown(df_owid, selected_country, selected_year)
+    chart = None
+    if share:
+        fig, ax = plt.subplots()
+        ax.pie(share.values(), labels=share.keys(), autopct="%1.1f%%", startangle=90)
+        ax.set_title("Renewable Source Breakdown")
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
+        chart = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+    return render(request, "dashboard/renewable_source_breakdown.html", {
+        "countries": countries,
+        "years": years,
+        "selected_country": selected_country,
+        "selected_year": selected_year,
+        "chart": chart
+    })
+
+# 3. Top Countries by Renewable Share
+
+def renewable_top_countries_view(request):
+    years = sorted(df_owid["year"].dropna().unique(), reverse=True)
+    selected_year = int(request.GET.get("year", max(years)))
+    top_df = top_countries_by_renewable(df_owid, selected_year)
+    return render(request, "dashboard/renewable_top_countries.html", {
+        "years": years,
+        "selected_year": selected_year,
+        "table_html": top_df.to_html(classes="table table-striped", index=False)
+    })
+
+# 4. Fastest Growth
+
+def renewable_fastest_growth_view(request):
+    years = sorted(df_owid["year"].dropna().unique())
+    start_year = int(request.GET.get("start", 2000))
+    end_year = int(request.GET.get("end", max(years)))
+    growth_df = fastest_growth_in_renewables(df_owid, start_year, end_year)
+    return render(request, "dashboard/renewable_fastest_growth.html", {
+        "years": years,
+        "start_year": start_year,
+        "end_year": end_year,
+        "table_html": growth_df.to_html(classes="table table-bordered", index=False)
+    })
+
+# 5. Electricity Mix
+
+def renewable_electricity_mix_view(request):
+    countries = sorted(df_owid["iso_code"].dropna().unique())
+    years = sorted(df_owid["year"].dropna().unique(), reverse=True)
+    selected_country = request.GET.get("country", "IND")
+    selected_year = int(request.GET.get("year", max(years)))
+
+    mix = electricity_mix(df_owid, selected_country, selected_year)
+    chart = None
+    if mix:
+        fig, ax = plt.subplots()
+        ax.bar(mix.keys(), mix.values(), color=["gray", "green"])
+        ax.set_title(f"{selected_country} Electricity Mix – {selected_year}")
+        ax.set_ylabel("Electricity (TWh)")
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
+        chart = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+
+    return render(request, "dashboard/renewable_electricity_mix.html", {
+        "countries": countries,
+        "years": years,
+        "selected_country": selected_country,
+        "selected_year": selected_year,
+        "chart": chart
+    })
+
+from dashboard.scripts.displacement_analysis import (
+    fossil_vs_renewable_energy,
+    energy_growth_rates,
+    energy_shares,
+    displacement_score,
+)
+
+OWID_PATH = os.path.join(settings.BASE_DIR, "data", "owid-energy-data.csv")
+df = pd.read_csv(OWID_PATH)
+countries = sorted(df["iso_code"].dropna().unique())
+
+
+def displacement_intro_view(request):
+    return render(request, "dashboard/displacement_intro.html")
+
+
+def displacement_fossil_vs_renewable_view(request):
+    selected_country = request.GET.get("country", "IND")
+    data = fossil_vs_renewable_energy(df, selected_country)
+    fig = px.line(
+        data,
+        x="year",
+        y=["fossil_energy", "renewables_energy"],
+        title=f"Fossil vs Renewable Energy – {selected_country}"
+    )
+    chart = fig.to_html(full_html=False)
+    return render(request, "dashboard/displacement_fossil_vs_renewable.html", {
+        "chart": chart,
+        "countries": countries,
+        "selected_country": selected_country
+    })
+
+
+def displacement_growth_rate_view(request):
+    selected_country = request.GET.get("country", "IND")
+    data = energy_growth_rates(df, selected_country)
+    fig = px.line(
+        data,
+        x="year",
+        y=["fossil_growth", "renewable_growth"],
+        title=f"Annual Growth Rate – {selected_country}"
+    )
+    chart = fig.to_html(full_html=False)
+    return render(request, "dashboard/displacement_growth_rate.html", {
+        "chart": chart,
+        "countries": countries,
+        "selected_country": selected_country
+    })
+
+
+def displacement_energy_share_view(request):
+    selected_country = request.GET.get("country", "IND")
+    data = energy_shares(df, selected_country)
+    fig = px.line(
+        data,
+        x="year",
+        y=["fossil_share", "renewable_share"],
+        title=f"Energy Share in Total Mix – {selected_country}"
+    )
+    chart = fig.to_html(full_html=False)
+    return render(request, "dashboard/displacement_energy_share.html", {
+        "chart": chart,
+        "countries": countries,
+        "selected_country": selected_country
+    })
+
+
+def displacement_score_view(request):
+    import matplotlib.pyplot as plt
+    import io
+    import base64
+
+    selected_country = request.GET.get("country", "IND")
+    data = displacement_score(df, selected_country)
+
+    fig, ax = plt.subplots()
+    ax.plot(data["year"], data["displacement_score"], color="green")
+    ax.axhline(0, linestyle="--", color="gray")
+    ax.set_ylabel("Displacement Score (%)")
+    ax.set_xlabel("Year")
+    ax.set_title(f"{selected_country}: Displacement Effectiveness Over Time")
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png")
+    buf.seek(0)
+    chart = base64.b64encode(buf.read()).decode("utf-8")
+    buf.close()
+
+    return render(request, "dashboard/displacement_score.html", {
+        "chart": chart,
+        "countries": countries,
+        "selected_country": selected_country
+    })
+
+
+def displacement_guide_view(request):
+    return render(request, "dashboard/displacement_guide.html")

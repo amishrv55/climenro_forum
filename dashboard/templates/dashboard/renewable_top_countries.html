@@ -1,0 +1,20 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container">
+    <h2>🌍 Top Countries by Renewable Share ({{ selected_year }})</h2>
+    <form method="get" class="row g-3 my-3">
+        <div class="col-md-4">
+            <label for="year">Select Year:</label>
+            <select name="year" class="form-select">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 align-self-end">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+    {{ table_html|safe }}
+</div>
+{% endblock %}

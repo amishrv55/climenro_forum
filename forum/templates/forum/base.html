@@ -2,24 +2,203 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Climenro Forum{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Climenro - Climate Policy Intelligence{% endblock %}</title>
     {% load static %}
 
-    <!-- ✅ Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Optional: Custom Styles -->
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    <style>
+        :root {
+            --climenro-dark: #0a2e38;
+            --climenro-medium: #1a4b5a;
+            --climenro-accent: #4db6ac;
+            --climenro-light: #e0f7fa;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        #round {
+            border-radius: 5%;
+        }
+        
+        .container {
+            flex: 1;
+        }
+        
+        /* Navbar is included here but styled in navbar.html */
+        
+        footer {
+            background: linear-gradient(135deg, var(--climenro-dark) 0%, var(--climenro-medium) 100%);
+            border-top: 1px solid rgba(224, 247, 250, 0.1);
+        }
+        
+        .footer-links a {
+            color: var(--climenro-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 2px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--climenro-accent);
+        }
+        
+        .footer-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--climenro-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-links a:hover:after {
+            width: 100%;
+        }
+        
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(224, 247, 250, 0.1);
+            border-radius: 50%;
+            margin-right: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--climenro-accent);
+            transform: translateY(-3px);
+        }
+        
+        .btn-footer {
+            border: 1px solid var(--climenro-accent);
+            color: var(--climenro-accent);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-footer:hover {
+            background-color: var(--climenro-accent);
+            color: var(--climenro-dark);
+        }
+    </style>
 </head>
 <body>
     {% include "forum/navbar.html" %}
 
-    <div class="container mt-4">
+    <main class="container mt-4 mb-5">
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
 
-    <!-- ✅ Bootstrap JS Bundle -->
+    <!-- Elegant Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                
+                <!-- Logo and About -->
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{% static 'logos/Climenro_logo.jpg' %}" alt="Climenro Logo" height="100" class="me-3" id="round">
+                        <h4 class="text-white mb-0">Climenro</h4>
+                    </div>
+                    <p class="text-white">Advanced climate policy intelligence platform combining AI analysis with expert insights.</p>
+                    
+                    <div class="mt-4">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="text-uppercase text-white mb-4">Resources</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="/forum/"><i class="fas fa-chevron-right me-2 small"></i>Community Forum</a></li>
+                        <li class="mb-2"><a href="/data/"><i class="fas fa-chevron-right me-2 small"></i>Data Dashboards</a></li>
+                        <li class="mb-2"><a href="/research/"><i class="fas fa-chevron-right me-2 small"></i>Research Papers</a></li>
+                        <li class="mb-2"><a href="/policy/"><i class="fas fa-chevron-right me-2 small"></i>Policy Tools</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="text-uppercase text-white mb-4">Company</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="/about/"><i class="fas fa-chevron-right me-2 small"></i>About Us</a></li>
+                        <li class="mb-2"><a href="/team/"><i class="fas fa-chevron-right me-2 small"></i>Our Team</a></li>
+                        <li class="mb-2"><a href="/careers/"><i class="fas fa-chevron-right me-2 small"></i>Careers</a></li>
+                        <li class="mb-2"><a href="/partners/"><i class="fas fa-chevron-right me-2 small"></i>Partners</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal & Contact -->
+<div class="col-lg-4 col-md-6 mb-4">
+    <h5 class="text-uppercase text-white mb-2">Connect With Us</h5>
+    <ul class="list-unstyled text-white">  <!-- Changed from text-muted to text-white -->
+        <li class="mb-3 d-flex">
+            <i class="fas fa-map-marker-alt mt-1 me-3 text-accent"></i>
+            <span>100 Oak Ave, Richmond Hill, ON, Canada, L4C 6R7</span>
+        </li>
+        <li class="mb-3 d-flex">
+            <i class="fas fa-envelope mt-1 me-3 text-accent"></i>
+            <span>contact@climenro.org</span>
+        </li>
+        <li class="mb-3 d-flex">
+            <i class="fas fa-phone-alt mt-1 me-3 text-accent"></i>
+            <span>xxxxxxxxxx</span>
+        </li>
+    </ul>
+    <a href="/contact/" class="btn btn-outline-light btn-sm btn-footer mt-2">
+        <i class="fas fa-paper-plane me-2"></i>Send Message
+    </a>
+</div>
+
+<!-- Copyright and Legal Links -->
+<div class="row align-items-center">
+    <div class="col-md-6 text-center text-md-start">
+        <p class="small text-white mb-0">&copy; {% now "Y" %} Climenro Technologies Inc. All rights reserved.</p>  <!-- Changed from text-muted to text-white -->
+    </div>
+    <div class="col-md-6 text-center text-md-end">
+        <ul class="list-inline mb-0">
+            <li class="list-inline-item"><a href="/privacy/" class="text-white small footer-links">Privacy Policy</a></li>  <!-- Changed from text-muted to text-white -->
+            <li class="list-inline-item mx-2 text-white">·</li>  <!-- Added text-white -->
+            <li class="list-inline-item"><a href="/terms/" class="text-white small footer-links">Terms of Service</a></li>  <!-- Changed from text-muted to text-white -->
+            <li class="list-inline-item mx-2 text-white">·</li>  <!-- Added text-white -->
+            <li class="list-inline-item"><a href="/cookies/" class="text-white small footer-links">Cookie Policy</a></li>  <!-- Changed from text-muted to text-white -->
+        </ul>
+    </div>
+</div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

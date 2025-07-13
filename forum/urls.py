@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('forum', views.forum_home, name='forum'),
     path('r/<str:subreddit_name>/', views.subreddit, name='subreddit'),
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
     path('create_post/', views.create_post, name='create_post'),
@@ -17,5 +18,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('register/', views.register, name='register'),
     path('comment/vote/<int:comment_id>/<str:direction>/', views.vote_comment, name='vote_comment'),
-
+    path('terms/', views.terms, name='terms'),
+    path('privacy/', views.privacy, name='privacy'),
+    path('guidelines/', views.guidelines, name='guidelines'),
 ]

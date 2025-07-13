@@ -1,0 +1,28 @@
+{% extends "forum/base.html" %}
+{% block content %}
+<div class="container">
+    <h2>🚀 Fastest Growth in Renewable Share</h2>
+    <form method="get" class="row g-3 my-3">
+        <div class="col-md-3">
+            <label for="start">Start Year:</label>
+            <select name="start" class="form-select">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == start_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="end">End Year:</label>
+            <select name="end" class="form-select">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == end_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 align-self-end">
+            <button type="submit" class="btn btn-primary">Compare</button>
+        </div>
+    </form>
+    {{ table_html|safe }}
+</div>
+{% endblock %}

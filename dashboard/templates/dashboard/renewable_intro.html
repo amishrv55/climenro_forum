@@ -1,0 +1,54 @@
+{% extends "forum/base.html" %}
+{% block title %}⚡ Renewable Insights | Climenro{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4">⚡ Renewable Energy Insights</h1>
+  <p class="lead">
+    Explore national and global progress in renewables using OWID energy dataset.
+  </p>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">📈 Trends Over Time</h5>
+          <p class="card-text">Visualize renewable energy share from 2000 to present by country.</p>
+          <a href="{% url 'dashboard:renewable_trend' %}" class="btn btn-outline-primary">View Trends</a>
+        </div>
+      </div>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">🌞 Source Breakdown</h5>
+          <p class="card-text">Explore solar, wind, hydro, and other sources by year & country.</p>
+          <a href="{% url 'dashboard:renewable_source_breakdown' %}" class="btn btn-outline-success">View Breakdown</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">🌍 Top Countries by Share</h5>
+          <p class="card-text">See global leaders in renewable share in a given year.</p>
+          <a href="{% url 'dashboard:renewable_top_countries' %}" class="btn btn-outline-info">Explore Leaders</a>
+        </div>
+      </div>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">🚀 Fastest Growth</h5>
+          <p class="card-text">Track which countries have grown fastest in renewables.</p>
+          <a href="{% url 'dashboard:renewable_fastest_growth' %}" class="btn btn-outline-warning">View Growth</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4">
+    <div class="card-body">
+      <h5 class="card-title">🔌 Electricity Mix</h5>
+      <p class="card-text">Compare fossil vs renewable electricity generation.</p>
+      <a href="{% url 'dashboard:renewable_electricity_mix' %}" class="btn btn-outline-dark">Explore Mix</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

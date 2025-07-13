@@ -1,0 +1,6 @@
+<h2>Upload Policy PDF</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="policy_pdf" accept="application/pdf" required>
+  <button type="submit">Upload and Extract</button>
+</form>

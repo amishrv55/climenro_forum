@@ -1,90 +1,131 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">Climenro Forum</a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #0a2e38 0%, #1a4b5a 100%); box-shadow: 0 2px 15px rgba(0,0,0,0.1);">
+  <div class="container">
+    <!-- Logo with text -->
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}" style="font-weight: 600;">
+      <span class="d-none d-md-inline" style="color: #e0f7fa; font-size: 2.1rem;">Climenro</span>
+    </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-
+      <ul class="navbar-nav mx-auto">  <!-- Centered navigation items -->
+        
         <!-- Home -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Home Page</a>
+        <li class="nav-item mx-1">
+          <a class="nav-link px-3 py-2 rounded" href="{% url 'home' %}" style="transition: all 0.3s ease;">
+            <i class="fas fa-home me-1"></i> Home
+          </a>
         </li>
 
         <!-- Forum Creation Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="forumDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Forum Creation
+        <li class="nav-item dropdown mx-1">
+          <a class="nav-link dropdown-toggle px-3 py-2 rounded" href="#" id="forumDropdown" role="button" data-bs-toggle="dropdown" style="transition: all 0.3s ease;">
+            <i class="fas fa-comments me-1"></i> Community
           </a>
-          <ul class="dropdown-menu" aria-labelledby="forumDropdown">
-            <li><a class="dropdown-item" href="{% url 'create_post' %}">Create Post</a></li>
-            <li><a class="dropdown-item" href="{% url 'create_subreddit' %}">Create Climate Mission</a></li>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="forumDropdown" style="background-color: #1a4b5a; border: none;">
+            <li><a class="dropdown-item py-2" href="{% url 'forum' %}"><i class="fas fa-list me-2"></i>Forum Discussions</a></li>
+            <li><a class="dropdown-item py-2" href="{% url 'create_post' %}"><i class="fas fa-plus-circle me-2"></i>Create Post</a></li>
+            <li><a class="dropdown-item py-2" href="{% url 'create_subreddit' %}"><i class="fas fa-seedling me-2"></i>New Climate Mission</a></li>
           </ul>
         </li>
 
         <!-- Policy Intelligence Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Policy Intelligence
+        <li class="nav-item dropdown mx-1">
+          <a class="nav-link dropdown-toggle px-3 py-2 rounded" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" style="transition: all 0.3s ease;">
+            <i class="fas fa-chart-line me-1"></i> Policy Tools
           </a>
-          <ul class="dropdown-menu" aria-labelledby="policyDropdown">
-            <li><a class="dropdown-item" href="{% url 'policy_graph:graph_view' %}">Policy Graph</a></li>
-            <li><a class="dropdown-item" href="{% url 'policy_graph:add_policy' %}">Add Policy</a></li>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="policyDropdown" style="background-color: #1a4b5a; border: none;">
+            <li><a class="dropdown-item py-2" href="{% url 'policy_graph:graph_view' %}"><i class="fas fa-project-diagram me-2"></i>Policy Graph</a></li>
+            <li><a class="dropdown-item py-2" href="{% url 'policy_graph:add_policy' %}"><i class="fas fa-plus-square me-2"></i>Add Policy</a></li>
           </ul>
         </li>
 
         <!-- News & Insights -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'news_feed' %}">News & Insights</a>
+        <li class="nav-item mx-1">
+          <a class="nav-link px-3 py-2 rounded" href="{% url 'news_feed' %}" style="transition: all 0.3s ease;">
+            <i class="fas fa-newspaper me-1"></i> News & Insights
+          </a>
         </li>
 
         <!-- Data and Dashboards Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Data and Dashboards
+        <li class="nav-item dropdown mx-1">
+          <a class="nav-link dropdown-toggle px-3 py-2 rounded" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" style="transition: all 0.3s ease;">
+            <i class="fas fa-database me-1"></i> Data Hub
           </a>
-          <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
-            <li><a class="dropdown-item" href="{% url 'dashboard:emission_intelligence' %}">Emission Intelligence</a></li>
-            <li><a class="dropdown-item" href="{% url 'dashboard:deep_intro' %}">Deep Insights</a></li>
-            <li><a class="dropdown-item" href="{% url 'dashboard:global_trends_home' %}">Global Trends</a></li>
-            <li><a class="dropdown-item" href="{% url 'dashboard:electricity_intro_view' %}">Electricity Intro</a></li>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dashboardDropdown" style="background-color: #1a4b5a; border: none;">
+            <li><h6 class="dropdown-header">Climate Analytics</h6></li>
+            <li><a class="dropdown-item py-2" href="{% url 'dashboard:emission_intelligence' %}"><i class="fas fa-smog me-2"></i>Emission Intelligence</a></li>
+            <li><a class="dropdown-item py-2" href="{% url 'dashboard:deep_intro' %}"><i class="fas fa-microscope me-2"></i>Deep Insights</a></li>
+            <li><a class="dropdown-item py-2" href="{% url 'dashboard:global_trends_home' %}"><i class="fas fa-globe-americas me-2"></i>Global Trends</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">Energy Analytics</h6></li>
+            <li><a class="dropdown-item py-2" href="{% url 'dashboard:electricity_intro_view' %}"><i class="fas fa-bolt me-2"></i>Electricity Data</a></li>
+            <li><a class="dropdown-item py-2" href="{% url 'dashboard:renewable_intro' %}"><i class="fas fa-solar-panel me-2"></i>Renewable Insights</a></li>
           </ul>
         </li>
-
-        <!-- Search -->
-        <li class="nav-item">
-          <form method="get" action="{% url 'search' %}" class="d-flex ms-2">
-            <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request.GET.q }}">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
-        </li>
-
       </ul>
 
-      <!-- Auth Buttons -->
-      <ul class="navbar-nav ms-auto">
+      <!-- Auth Buttons - Right aligned -->
+      <ul class="navbar-nav">
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
-          </li>
-          <li class="nav-item">
-            <form method="post" action="{% url 'logout' %}" style="display:inline;">
-              {% csrf_token %}
-              <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none;">Logout</button>
-            </form>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <span class="badge rounded-pill bg-teal me-2" style="background-color: #4db6ac;">{{ user.username|slice:":1"|upper }}</span>
+              <span>{{ user.username }}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" style="background-color: #1a4b5a; border: none;">
+              <li><a class="dropdown-item py-2" href="{% url 'user_profile' user.username %}"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item py-2" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item py-2" style="background: none; border: none; text-align: left; width: 100%;">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-outline-light me-2" href="{% url 'login' %}" style="border-radius: 20px;">
+              <i class="fas fa-sign-in-alt me-1"></i> Login
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Register</a>
+            <a class="btn btn-teal" href="{% url 'register' %}" style="background-color: #4db6ac; border-radius: 20px;">
+              <i class="fas fa-user-plus me-1"></i> Register
+            </a>
           </li>
         {% endif %}
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+  .navbar {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .nav-link:hover, .nav-link:focus {
+    background-color: rgba(77, 182, 172, 0.2);
+    color: #e0f7fa !important;
+  }
+  .dropdown-item:hover, .dropdown-item:focus {
+    background-color: #4db6ac;
+    color: white !important;
+  }
+  .navbar-brand:hover {
+    opacity: 0.9;
+  }
+  .btn-teal:hover {
+    background-color: #26a69a !important;
+  }
+</style>

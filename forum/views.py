@@ -8,15 +8,18 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-
 from django.core.paginator import Paginator
-
-
 from .models import Post, Subreddit
 from django.core.paginator import Paginator
 from django.db import models
+from news.models import NewsArticle
 
 def home(request):
+    latest_news = NewsArticle.objects.order_by('-created_at')[:3]
+    return render(request, 'forum/home.html', {'latest_news': latest_news})
+
+
+def forum_home(request):
     sort = request.GET.get('sort', 'new')
     subreddit_name = request.GET.get('subreddit')
     country_code = request.GET.get('country')
@@ -42,7 +45,7 @@ def home(request):
     subreddits = Subreddit.objects.all()
     countries = Post.select_country  # ✅ Here’s the missing line
 
-    return render(request, 'forum/home.html', {
+    return render(request, 'forum/forum_home.html', {
         'posts': posts,
         'sort': sort,
         'subreddit_name': subreddit_name,
@@ -257,3 +260,13 @@ def vote_comment(request, comment_id, direction):
         vote.save()
 
     return redirect('post_detail', post_id=comment.post.id)
+
+
+def terms(request):
+    return render(request, 'terms.html')
+
+def privacy(request):
+    return render(request, 'privacy.html')
+
+def guidelines(request):
+    return render(request, 'guidelines.html')

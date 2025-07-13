@@ -45,5 +45,11 @@ urlpatterns = [
     path("electricity/efficiency/", views.electricity_efficiency_view, name="electricity_efficiency_view"),
     path("electricity/fuel-mix-over-time/", views.electricity_fuel_mix_time_view, name="electricity_fuel_mix_time_view"),
     path("electricity/about/", views.electricity_about_view, name="electricity_about_view"),
+    path("renewable/intro/", views.renewable_intro_view, name="renewable_intro"),
+    path("renewable/trend/", views.renewable_trend_view, name="renewable_trend"),
+    path("renewable/source-breakdown/", views.renewable_source_breakdown_view, name="renewable_source_breakdown"),
+    path("renewable/top-countries/", views.renewable_top_countries_view, name="renewable_top_countries"),
+    path("renewable/fastest-growth/", views.renewable_fastest_growth_view, name="renewable_fastest_growth"),
+    path("renewable/electricity-mix/", views.renewable_electricity_mix_view, name="renewable_electricity_mix"),
 ]
 
