@@ -1,14 +1,17 @@
 import pandas as pd
 import re
+from django.conf import settings
 
-def load_activity_table(path='data/activity_emission_factor.csv'):
+DATA_PATH = os.path.join(settings.BASE_DIR, 'data')
+
+def load_activity_table(path='activity_emission_factor.csv'):
     df = pd.read_csv(path, encoding='utf-8')
     df['Keywords'] = df['Keywords'].fillna('').apply(
         lambda x: [kw.strip().lower() for kw in x.split(',')]
     )
     return df
 
-def load_country_factors(path='data/country_composite_factor.csv'):
+def load_country_factors(path='country_composite_factor.csv'):
     df = pd.read_csv(path, encoding='utf-8')
     df['Country'] = df['Country'].str.strip()
     return df
