@@ -1,0 +1,54 @@
+{% extends "forum/base.html" %}
+{% block title %}Policy Intelligence | Climenro{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold"> Climate Policy Intelligence Platform</h1>
+        <p class="lead">Explore, Analyze, and Understand Climate Policies using AI-powered metadata insights.</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <h4>🔍 What This Tool Does</h4>
+            <p>This tool ingests climate policy documents (PDFs), extracts section-wise content using NLP and LLMs, and generates structured metadata. It provides searchable summaries and analytical tags to aid researchers, policymakers, and policy experts.</p>
+        </div>
+        <div class="col-md-6">
+            <h4>🛠️ How to Use</h4>
+            <ul>
+                <li><strong>Upload</strong> policy documents (coming soon via upload form)</li>
+                <li><strong>Explore</strong> metadata <a href="{% url 'explore_metadata' %}">on the explore page</a></li>
+                <li><strong>Analyze</strong> section-wise summaries and filters</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <h4>🧪 Methodology</h4>
+            <ol>
+                <li>Extract raw text from PDF using OCR and PDF parsers</li>
+                <li>Detect and tag sections using heuristics (e.g., headers like “###”)</li>
+                <li>Pass sectioned content to LLM to generate structured JSON metadata</li>
+                <li>Merge section metadata to build a policy-level summary and index</li>
+                <li>Store the result in a searchable SQL database</li>
+            </ol>
+        </div>
+        <div class="col-md-6">
+            <h4>📌 Assumptions</h4>
+            <ul>
+                <li>Policies follow identifiable headers (for sectioning)</li>
+                <li>LLM model is accurate in summarizing and tagging</li>
+                <li>Metadata generation is consistent across policies</li>
+                <li>Only public and official government policies are uploaded</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'explore_metadata' %}" class="btn btn-primary btn-lg">
+            Start Exploring Policies 🚀
+        </a>
+    </div>
+</div>
+{% endblock %}

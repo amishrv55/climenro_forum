@@ -1,0 +1,138 @@
+# Create your views here.
+import os
+import json
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Policy, PolicySection
+from datetime import datetime
+
+def policy_home(request):
+    return render(request, 'policy_analysis/home.html')
+
+def upload_metadata(request):
+    # Implement upload or file selection logic
+    return render(request, 'policy_analysis/upload.html')
+
+def explore_metadata(request):
+    country = request.GET.get('country', '').strip()
+    year = request.GET.get('year', '').strip()
+    sector = request.GET.get('sector', '').strip()
+
+    policies = list(Policy.objects.all())
+
+    if country:
+        policies = [p for p in policies if p.country.lower() == country.lower()]
+
+    if year:
+        try:
+            y = int(year)
+            policies = [p for p in policies if p.year == y]
+        except ValueError:
+            pass
+
+    if sector:
+        sector_lower = sector.lower()
+        policies = [p for p in policies if p.sectors and any(sector_lower in s.lower() for s in p.sectors)]
+
+    countries = Policy.objects.values_list('country', flat=True).distinct()
+    years = Policy.objects.values_list('year', flat=True).distinct()
+
+    context = {
+        'policies': policies,
+        'countries': countries,
+        'years': years,
+    }
+
+    return render(request, 'policy_analysis/explore.html', context)
+
+
+
+def policy_detail(request, policy_id):
+    policy = Policy.objects.get(policy_id=policy_id)
+    sections = PolicySection.objects.filter(policy=policy)
+
+    context = {
+        'policy': policy,
+        'sections': sections,
+    }
+
+    return render(request, 'policy_analysis/policy_detail.html', context)
+
+
+def parse_date(date_str):
+    try:
+        return datetime.strptime(date_str, '%Y-%m-%d').date()
+    except:
+        return None
+
+def upload_metadata(request):
+    if request.method == 'POST':
+        policy_file = request.FILES.get('policy_file')
+        section_file = request.FILES.get('section_file')
+
+        if not policy_file or not section_file:
+            messages.error(request, "Both files are required.")
+            return redirect('upload_metadata')
+
+        policy_data = json.load(policy_file)
+        section_data = json.load(section_file)
+
+        policy_obj, _ = Policy.objects.update_or_create(
+            policy_id=policy_data['policy_id'],
+            defaults={
+                'title': policy_data.get('title'),
+                'summary': policy_data.get('summary') or '',
+                'year': policy_data.get('year', 2000),
+                'date_of_issuance': parse_date(policy_data.get('date_of_issuance', '2000-01-01')),
+                'country': policy_data.get('country', 'NA'),
+                'document_type': policy_data.get('document_type', 'Unknown'),
+                'is_fundamental': policy_data.get('is_fundamental', False),
+                'has_children': policy_data.get('has_children', False),
+                'num_sections': policy_data.get('num_sections', 0),
+                'sectors': policy_data.get('sectors', []),
+                'sub_sectors': policy_data.get('sub_sectors', []),
+                'intent_tags': policy_data.get('intent_tags', []),
+                'policy_tools': policy_data.get('policy_tools', []),
+                'responsible_ministries': policy_data.get('responsible_ministries', []),
+                'linked_documents': policy_data.get('linked_documents', []),
+            }
+        )
+
+        for sec in section_data:
+            PolicySection.objects.update_or_create(
+                section_id=sec['section_id'],
+                defaults={
+                    'policy': policy_obj,
+                    'title': sec.get('title', ''),
+                    'summary': sec.get('summary', ''),
+                    'sector': sec.get('sector', ''),
+                    'sub_sectors': sec.get('sub_sectors', []),
+                    'intent_tags': sec.get('intent_tags', []),
+                    'policy_type': sec.get('policy_type', ''),
+                    'policy_tools': sec.get('policy_tools', []),
+                    'responsible_ministries': sec.get('responsible_ministries', []),
+                    'linked_documents': sec.get('linked_documents', []),
+                    'global_alignment': sec.get('global_alignment', ''),
+                    'is_legally_binding': str(sec.get('is_legally_binding', '')),
+                    'compliance_type': sec.get('compliance_type', ''),
+                    'mrv_system': sec.get('mrv_system', ''),
+                    'monitoring_mechanism': sec.get('monitoring_mechanism', ''),
+                    'targets': str(sec.get('targets', '')),
+                    'impact_estimate': str(sec.get('impact_estimate', '')),
+                    'climate_finance': str(sec.get('climate_finance', '')),
+                    'financial_outlay': str(sec.get('financial_outlay', '')),
+                    'yearly_budget': str(sec.get('yearly_budget', '')),
+                    'timeline': sec.get('timeline', ''),
+                    'lifecycle_history': sec.get('lifecycle_history', ''),
+                    'kpis': str(sec.get('kpis', '')),
+                    'linked_ndcs_or_sdgs': str(sec.get('linked_ndcs_or_sdgs', '')),
+                }
+            )
+
+        messages.success(request, f"{policy_obj.title} uploaded with {len(section_data)} sections.")
+        return redirect('upload_metadata')
+
+    return render(request, 'policy_analysis/upload.html')
+
+
+

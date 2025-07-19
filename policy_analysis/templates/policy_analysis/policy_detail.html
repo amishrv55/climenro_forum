@@ -1,0 +1,32 @@
+{% extends "forum/base.html" %}
+{% block title %}{{ policy.title }} | Climenro{% endblock %}
+
+{% block content %}
+<h2>{{ policy.title }}</h2>
+<p><strong>Country:</strong> {{ policy.country }} | <strong>Year:</strong> {{ policy.year }}</p>
+<p><strong>Summary:</strong> {{ policy.summary }}</p>
+<hr>
+
+<h4>📄 Sections:</h4>
+
+{% for s in sections %}
+    <div class="card mb-3">
+        <div class="card-header bg-light">
+            <h5>{{ s.title }}</h5>
+        </div>
+        <div class="card-body">
+            <p>{{ s.summary }}</p>
+            {% if s.policy_tools %}
+                <p><strong>Tools:</strong> {{ s.policy_tools|join:", " }}</p>
+            {% endif %}
+            {% if s.responsible_ministries %}
+                <p><strong>Ministries:</strong> {{ s.responsible_ministries|join:", " }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% empty %}
+    <p>No section metadata available for this policy.</p>
+{% endfor %}
+
+<a href="{% url 'explore_metadata' %}" class="btn btn-outline-secondary mt-4">⬅ Back to Explore</a>
+{% endblock %}

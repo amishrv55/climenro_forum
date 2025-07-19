@@ -1,0 +1,59 @@
+{% extends "forum/base.html" %}
+{% block title %}Explore Policies | Climenro{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">🌍 Explore Climate Policies</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label>Country</label>
+        <select name="country" class="form-select">
+            <option value="">All</option>
+            {% for c in countries %}
+                <option value="{{ c }}" {% if request.GET.country == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Year</label>
+        <select name="year" class="form-select">
+            <option value="">All</option>
+            {% for y in years %}
+                <option value="{{ y }}" {% if request.GET.year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label>Sector (optional)</label>
+        <input type="text" name="sector" class="form-control" value="{{ request.GET.sector }}">
+    </div>
+    <div class="col-md-4 align-self-end">
+        <button type="submit" class="btn btn-success">Filter</button>
+        <a href="{% url 'explore_metadata' %}" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
+<hr>
+
+{% if policies %}
+    {% for p in policies %}
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5>
+                    <a href="{% url 'policy_detail' policy_id=p.policy_id %}">
+                        {{ p.title }}
+                    </a>
+                </h5>
+                <small><strong>Country:</strong> {{ p.country }} | <strong>Year:</strong> {{ p.year }}</small>
+            </div>
+            <div class="card-body">
+                <p>{{ p.summary|truncatechars:300 }}</p>
+                {% if p.sectors %}<p><strong>Sectors:</strong> {{ p.sectors|join:", " }}</p>{% endif %}
+                {% if p.intent_tags %}<p><strong>Intent Tags:</strong> {{ p.intent_tags|join:", " }}</p>{% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No policies found with selected filters.</p>
+{% endif %}
+{% endblock %}

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'news',
     'policy_graph',
     'dashboard',
+    'policy_analysis',
 ]
 
 MIDDLEWARE = [

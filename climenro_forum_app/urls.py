@@ -28,6 +28,7 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('policy/', include('policy_graph.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('analysis/', include('policy_analysis.urls')),  
 ]
 
 # Serve media files in development
