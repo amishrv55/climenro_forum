@@ -1,0 +1,499 @@
+[
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec1",
+    "title": "overview",
+    "summary": "India is faced with the challenge of sustaining its rapid economic growth while dealing with the global threat of climate change. The country needs a national strategy to adapt to climate change and to further enhance the ecological sustainability of India's development path. India's development path is based on its unique resource endowments, the overriding priority of economic and social development and poverty eradication, and its adherence to its civilizational legacy that places a high value on the environment and the maintenance of ecological balance.",
+    "sector": "Climate Change",
+    "sub_sectors": [
+      "Energy",
+      "Agriculture",
+      "Water",
+      "Forestry"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan",
+    "policy_tools": [
+      "Public-private partnerships",
+      "Regulatory and voluntary mechanisms",
+      "Technology deployment"
+    ],
+    "responsible_ministries": [
+      "Prime Minister's Council on Climate Change"
+    ],
+    "linked_documents": [
+      "UN Framework Convention on Climate Change",
+      "National Solar Mission",
+      "National Mission for Enhanced Energy Efficiency",
+      "National Mission on Sustainable Habitat",
+      "National Water Mission",
+      "National Mission for Sustaining the Himalayan Ecosystem",
+      "National Mission for a 'Green India'",
+      "National Mission for Sustainable Agriculture",
+      "National Mission on Strategic Knowledge for Climate Change"
+    ],
+    "global_alignment": "India will engage actively in multilateral negotiations in the UN Framework Convention on Climate Change, in a positive, constructive and forward-looking manner. Our objective will be to establish an effective, cooperative and equitable global approach based on the principle of common but differentiated responsibilities and respective capabilities, enshrined in the United Nations framework Convention on Climate Change (UNFCCC).",
+    "is_legally_binding": "Not specified",
+    "targets": "India is determined that its per capita greenhouse gas emissions will at no point exceed that of developed countries even as we pursue our development objectives.",
+    "financial_outlay": "Not specified",
+    "yearly_budget": "Not specified",
+    "climate_finance": "The success of our national efforts would be significantly enhanced provided the developed countries affirm their responsibility for accumulated greenhouse gas emissions and fulfill their commitments under the UNFCCC, to transfer new and additional financial resources and climate friendly technologies to support both adaptation and mitigation in developing countries.",
+    "compliance_type": "Not specified",
+    "timeline": "Not specified",
+    "lifecycle_history": "Not specified",
+    "kpis": "Not specified",
+    "impact_estimate": "Not specified",
+    "linked_ndcs_or_sdgs": "Not specified"
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec2",
+    "title": "eight national missions",
+    "summary": "The National Action Plan on Climate Change outlines eight missions aimed at addressing climate change and promoting sustainable development. These missions include the National Solar Mission, National Mission for Enhanced Energy Efficiency, National Mission on Sustainable Habitat, National Water Mission, National Mission for Sustaining the Himalayan Ecosystem, National Mission for a Green India, National Mission for Sustainable Agriculture, and National Mission on Strategic Knowledge for Climate Change. Each mission is tasked with specific objectives and will be reviewed periodically by the Prime Minister's Council on Climate Change.",
+    "sector": "Environment",
+    "sub_sectors": [
+      "Renewable Energy",
+      "Energy Efficiency",
+      "Sustainable Habitat",
+      "Water Management",
+      "Ecosystem Conservation",
+      "Forestry",
+      "Agriculture",
+      "Climate Change Research"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan",
+    "policy_tools": [
+      "Regulatory Mechanisms",
+      "Incentive Structures",
+      "Research and Development",
+      "Public Awareness Campaigns",
+      "Capacity Building"
+    ],
+    "responsible_ministries": [
+      "Ministry of Finance",
+      "Planning Commission",
+      "Related Ministries"
+    ],
+    "linked_documents": [],
+    "timeline": "11th Plan and the 12th Plan period 2012-13 to 2016-17",
+    "financial_outlay": "An initial corpus of over Rs 6000 crore has been earmarked for the programme through the Compensatory Afforestaion Management and Planning Authority (CAMPA)",
+    "compliance_type": "Each Mission will report publicly on its annual performance",
+    "is_legally_binding": "The Energy Conservation Act of 2001 provides a legal mandate for the implementation of the energy efficiency measures",
+    "mrv_system": "We will develop appropriate technologies to measure progress in actions being taken in terms of avoided emissions, wherever applicable, with reference to business as usual scenarios. Appropriate indicators will be evolved for assessing adaptation benefits of the actions",
+    "monitoring_mechanism": "Comprehensive Mission documents detailing objectives, strategies, plan of action, timelines and monitoring and evaluation criteria would be developed and submitted to the Prime Minister's Council on Climate Change by December 2008. The Council will also periodically review the progress of these Missions",
+    "targets": "The national target of area under forest and tree cover is 33% while the current area under forests is 23%",
+    "impact_estimate": "These Eight National Missions, taken together, with enhancements in current and ongoing programmes included in the Technical Document, would not only assist the country to adapt to climate change, but also, importantly, launch the economy on a path that would progressively and substantially result in mitigation through avoided emissions",
+    "global_alignment": "India will spearhead efforts at the international level to work towards an ecologically sustainable green revolution",
+    "linked_ndcs_or_sdgs": "The NAPCC will continue to evolve, based on new scientific and technical knowledge as they emerge and in response to the evolution of the multilateral climate change regime including arrangements for international cooperation"
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec3",
+    "title": "backgound",
+    "summary": "This section discusses the impacts of climate change in India and the country's response through the National Action Plan for Climate Change. The plan aims to promote development objectives while addressing climate change effectively. It also highlights India's commitment to finding practical solutions for climate change, in line with the principle of common but differentiated responsibilities. The section also discusses the correlation between energy use and human development, India's carbon dioxide emissions, observed changes in climate and weather events, and possible impacts of projected climate change.",
+    "sector": "Climate Change",
+    "sub_sectors": [
+      "Energy",
+      "Agriculture",
+      "Health",
+      "Forestry",
+      "Extreme Events"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan",
+    "policy_tools": [
+      "Energy Efficiency",
+      "Renewable Energy",
+      "Nuclear Power",
+      "Fuel Switching",
+      "Energy Pricing Reform"
+    ],
+    "responsible_ministries": [
+      "Prime Minister's Council on Climate Change"
+    ],
+    "linked_documents": [
+      "Fourth Assessment report of the Intergovernmental Panel on Climate Change (IPCC-AR4)",
+      "India's Initial National Communication, 2004 (NATCOM 1) to UNFCCC"
+    ],
+    "timeline": "1850 to the present, 2090-2099",
+    "financial_outlay": "Not mentioned",
+    "yearly_budget": "Not mentioned",
+    "climate_finance": "Not mentioned",
+    "compliance_type": "Not mentioned",
+    "is_legally_binding": "Not mentioned",
+    "mrv_system": "Not mentioned",
+    "monitoring_mechanism": "Not mentioned",
+    "targets": "Not mentioned",
+    "kpis": "Not mentioned",
+    "impact_estimate": "Surface Temperature increase of 0.4' C over the past century, increasing monsoon seasonal rainfall along the west coast, northern Andhra Pradesh, and north-western India (+10% to +12% of the normal over the last 100 years), decreasing monsoon seasonal rainfall over eastern Madhya Pradesh, north-eastern India, and some parts of Gujarat and Kerala (-6% to -8% of the normal over the last 100 years), increasing trend in severe storm incidence along the coast at the rate of 0.011 events per year, sea level rise between 1.06-1.75 mm per year, recession of some glaciers in some Himalayan regions, projected annual mean surface temperature rise by the end of century, ranging from 3 to 5' C under A2 scenario and 2.5 to 4' C under B2 scenario of IPCC, with warming more pronounced in the northern parts of India, projected increase in summer monsoon intensity by 10% by 2100 under A2 scenario of IPCC, projected changes in frequency and/ or magnitude of extreme temperature and precipitation events, projected decline in total run-off for all river basins, except Narmada and Tapti, projected decline in run-off by more than two-thirds for the Sabarmati and Luni basins, projected increase in the area under xeric scrublands and xeric woodlands in central India at the cost of dry savannah in these regions",
+    "global_alignment": "IPCC-AR4",
+    "linked_ndcs_or_sdgs": "Not mentioned"
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec4",
+    "title": "current mitigation actions",
+    "summary": "This section discusses the projected impacts of climate change on India's coastal areas and outlines current adaptation and mitigation actions. Adaptation measures include crop improvement, drought proofing, forestry, water management, risk financing, disaster management, health initiatives, and coastal region protection. Mitigation actions include policy structures relevant to GHG mitigation, introduction of labelling programme for appliances, energy conservation building code, energy audits of large industrial consumers, mass transport initiatives, and clean air initiatives.",
+    "sector": "Environment, Agriculture, Forestry, Water, Health, Energy, Transport",
+    "sub_sectors": "Coastal regions, Crop improvement, Drought proofing, Afforestation, Water policy, Risk financing, Disaster management, Health surveillance, Energy efficiency, Building codes, Industrial energy audits, Mass transport, Air quality",
+    "intent_tags": [
+      "mitigation",
+      "adaptation"
+    ],
+    "policy_type": "Regulatory, Financial, Informational",
+    "policy_tools": [
+      "Crop Insurance Scheme",
+      "Credit Support Mechanism",
+      "National Water Policy",
+      "Rural Electrification Policy",
+      "New and Renewable Energy Policy",
+      "National Environment Policy",
+      "Energy Conservation Building Code",
+      "National Urban Transport Policy"
+    ],
+    "responsible_ministries": [
+      "Ministry of Environment, Forest and Climate Change",
+      "Ministry of Agriculture & Farmers Welfare",
+      "Ministry of Water Resources",
+      "Ministry of Health and Family Welfare",
+      "Ministry of Power",
+      "Ministry of Road Transport and Highways"
+    ],
+    "linked_documents": [
+      "NATCOM I",
+      "Forest Conservation Act of 1980",
+      "Integrated Energy Policy",
+      "Electricity Act 2005",
+      "Tariff Policy 2003",
+      "Petroleum & Natural Gas Regulatory Board Act, 2006",
+      "Notification on Environment Impact Assessment (EIA), 2006"
+    ],
+    "financial_outlay": "exceeds 2.6% of the GOP",
+    "yearly_budget": "Expenditure on Adaptation Programmes in India",
+    "impact_estimate": "if all the commercial space in India every year conform to ECBC norms, energy consumption in this sector can be reduced by 30-40%",
+    "compliance_type": "mandatory requirements of compensatory afforestation in case of any diversion of forest land for any non-forestry purpose",
+    "monitoring_mechanism": "The conduct of energy audits was made mandatory in large energy-consuming units in nine industrial sectors. These units, notified as 'designated consumers' are also required to employ 'certified energy managers', and report energy consumption and energy conservation data annually.",
+    "targets": "The Rural Electrification Policy, 2006, promotes renewable energy technologies where grid connectivity is not possible or cost-effective. The New and Renewable Energy Policy, 2005, promotes utilization of sustainable, renewable energy sources, and accelerated deployment of renewables through indigenous design, development and manufacture.",
+    "is_legally_binding": "Yes"
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec5",
+    "title": "national solar mission",
+    "summary": "The document discusses various initiatives to promote energy efficiency and reduce pollution, including the use of compressed natural gas, retiring old vehicles, strengthening mass transportation, and promoting energy-saving devices. It also discusses the National Solar Mission, which aims to promote the use of solar energy for power generation and other applications. The document also outlines the National Mission for Enhanced Energy Efficiency in Industry, which aims to reduce CO2 emissions from industrial sources.",
+    "sector": "Energy, Transportation, Industry",
+    "sub_sectors": "Solar Energy, Biofuels, Energy Efficiency",
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "Regulation, Subsidy",
+    "policy_tools": [
+      "Bachat Lamp Yojana",
+      "Biodiesel Purchase Policy",
+      "Ethanol Blending of Gasolene",
+      "National Solar Mission",
+      "National Mission for Enhanced Energy Efficiency In Industry"
+    ],
+    "responsible_ministries": [
+      "Bureau of Energy Efficiency",
+      "Government of India"
+    ],
+    "linked_documents": null,
+    "timeline": "11th and 12th Plan periods (till 2017)",
+    "financial_outlay": {
+      "solar_thermal_power_plants": "Rs 20-22 cr/MW",
+      "solar_photovoltaic_power_systems": "Rs. 30-35cr/MW"
+    },
+    "yearly_budget": null,
+    "climate_finance": "funding available under global climate mechanisms",
+    "compliance_type": "mandatory",
+    "is_legally_binding": true,
+    "targets": {
+      "solar_energy_coverage": {
+        "low_temperature_applications": "80%",
+        "medium_temperature_applications": "60%"
+      },
+      "local_photovoltaic_production": "1000 MW/annum",
+      "concentrating_solar_power_generation_capacity": "1000 MW"
+    },
+    "kpis": null,
+    "impact_estimate": {
+      "direct_co2_emissions_from_industrial_sources": "31%",
+      "co2_emissions_from_energy_use_in_industry": "60%"
+    },
+    "global_alignment": "networking of Indian research efforts with international initiatives",
+    "linked_ndcs_or_sdgs": null
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec6",
+    "title": "nmeee",
+    "summary": "This section discusses various options for GHG mitigation in the industry sector, including sector-specific technological options, cross-cutting technologies, and fuel switch options. It also discusses the potential for emissions reduction, co-benefits, technology transfer, financing, capacity-building needs, policy and regulatory options, and delivery options.",
+    "sector": "Industry",
+    "sub_sectors": [
+      "Chlor-Aikali",
+      "Cement",
+      "Aluminum",
+      "Fertilizer",
+      "Iron and Steel",
+      "Pulp and Paper",
+      "Textile"
+    ],
+    "intent_tags": [
+      "mitigation",
+      "adaptation",
+      "governance"
+    ],
+    "policy_type": [
+      "Energy Conservation Act (2001)"
+    ],
+    "policy_tools": [
+      "energy audits",
+      "specific energy-consumption norms",
+      "energy efficiency financing platforms",
+      "tax incentives",
+      "fiscal incentives"
+    ],
+    "responsible_ministries": [],
+    "linked_documents": [
+      "NATIONAL ACTION PLAN ON CLIMATE CHANGE"
+    ],
+    "financial_outlay": "The move to efficient technologies in the industry sector generally involves significant incremental investment, and in many cases, economic costs. These would have to be provided by multilateral funding arrangements. In particular, special financing mechanisms would need to be put in place for the SMEs. Bundling and/or programmatic CDM could be a possible financing route for these units.",
+    "impact_estimate": "It is estimated that co2 emissions from fuel and electricity use in the industry sector could be further reduced by about 605 million tonnes (approximately 16% reduction from the BAU scenario) in the year 2031.",
+    "compliance_type": "Under the Energy Conservation Act (2001 ), 9 energy intensive industrial sectors, i.e. thermal power stations, fertilizer, cement, iron and steel, chlor-alkali, aluminum, railways, textile and pulp and paper, are required to employ a certified energy manager, conduct energy audits periodically, and adhere to specific energy-consumption norms that may be prescribed.",
+    "targets": "The energy efficiency improvement target, in percentage, from current levels for each unit varies with its band, being highest for the least energy efficient, and the least for the most efficient. These targets would have to be achieved within a period of 3 to 5 years within each group.",
+    "monitoring_mechanism": "Mandated specific energy consumption decreases in large energy consuming industries and facilities that have been notified as Designated Consumers under the Energy Conservation Act, and provide a framework to certify energy savings in excess of the mandated savings. The certified excess savings may be traded amongst companies to meet their mandated compliance requirements, or banked for the next cycle of energy savings requirements.",
+    "mrv_system": "The key delivery options for energy efficiency in industry are: Projects, including retrofits, by the corporate sector, with institutional finance; Activities related to cluster development, particularly in SMEs; Promotion of ESCOs (Energy Service Companies) for providing energy efficiency solutions across industry sectors. The Energy Efficiency Financing Platform initiated by the Bureau of Energy Efficiency, in conjunction with a robust ESCO industry could provide the necessary impetus to energy efficiency. In respect of each delivery mode, carbon finance through the CDM would also be relevant."
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec7",
+    "title": "sustainable habitat",
+    "summary": "The mission focuses on promoting energy efficiency in the residential and commercial sector, managing municipal solid waste, and promoting urban public transport. It highlights the potential for significant energy savings in residential and commercial buildings through the implementation of energy-efficient options. The mission also discusses the need for technology transfer and capacity building, policy and regulatory enhancements, and the costs and financing of implementing energy-efficient measures. It also covers the management of municipal solid waste and the promotion of urban public transport.",
+    "sector": "Energy",
+    "sub_sectors": [
+      "Residential",
+      "Commercial",
+      "Transport",
+      "Waste Management"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Mission",
+    "policy_tools": [
+      "Energy Efficiency",
+      "Technology Transfer",
+      "Capacity Building",
+      "Policy and Regulatory Enhancements",
+      "Financing"
+    ],
+    "responsible_ministries": [
+      "Ministry of Environment and Forests"
+    ],
+    "linked_documents": [
+      "National Action Plan on Climate Change"
+    ],
+    "financial_outlay": "The incremental cost of implementation of energy-efficient measures is estimated to vary between 3%-5% for residential buildings and 10%-15% for commercial buildings on a case-to-case basis.",
+    "targets": "The implementation of energy efficient options would help in achieving around 30% electricity savings in new residential buildings and 40% electricity savings in new commercial buildings. In case of existing buildings, the energy saving potential for residential buildings is estimated to be around 20%, and that for commercial buildings around 30%.",
+    "impact_estimate": "Comprehensive implementation of the Bachat lamp Yojana can lead to a reduction of 10,000 MW (Megawatt) of electricity demand.",
+    "compliance_type": "The MSW Rules under the Environment Protection Act are currently somewhat focused on specific treatment options, including the chain of collection, transport and disposal. This focus is unduly prescriptive, and prevents innovation in systems and procedures, as well as update on new technologies and techniques. The MSW Rules should be revised to focus instead on performance or outcome norms that are to be met irrespective of particular systems and procedures, or technologies.",
+    "monitoring_mechanism": "Setting flexible performance-based codes rather than technology/options prescriptions can help keep compliance costs low and may provide incentives for innovation."
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec8",
+    "title": "other missions",
+    "summary": "This section outlines India's National Action Plan on Climate Change, focusing on various missions such as National Water Mission, National Mission for Sustaining the Himalayan Ecosystem, National Mission for a 'Green India', National Mission for Sustainable Agriculture, and National Mission on Strategic Knowledge for Climate Change. Each mission has specific objectives and strategies to address climate change impacts in their respective sectors.",
+    "sector": "Environment",
+    "sub_sectors": [
+      "Water Management",
+      "Ecosystem Conservation",
+      "Forestry",
+      "Agriculture",
+      "Climate Science"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan",
+    "policy_tools": [
+      "Legislation",
+      "Research and Development",
+      "Investment Support",
+      "Tax Benefits",
+      "Regulatory Structures",
+      "Incentives",
+      "Integrated Policies",
+      "Training",
+      "Risk Management",
+      "Information Access",
+      "Biotechnology"
+    ],
+    "responsible_ministries": [
+      "Ministry of Environment, Forest and Climate Change"
+    ],
+    "linked_documents": [],
+    "timeline": "2050",
+    "financial_outlay": "Rs 6000 crores",
+    "compliance_type": "Mandatory water assessments and audits",
+    "is_legally_binding": "Yes",
+    "monitoring_mechanism": [
+      "Monitoring of glacier and ice-mass, impacts on water resources, soil erosion",
+      "Strengthening of observational networks and data gathering and assimilation",
+      "Creation of essential research infrastructure"
+    ],
+    "targets": [
+      "Abandoning of old vehicles to be made illegal",
+      "Setting up of a demonstration unit to take up recycling of vehicles",
+      "Setting up a Combustion Research Institute",
+      "Providing tax benefits and investment support for recovery of materials from scrap vehicles",
+      "Increase the efficiency of water use",
+      "Explore options to augment water supply in critical areas",
+      "Ensure more effective management of water resources",
+      "Increase forest cover and density",
+      "Conservation of wildlife and biodiversity",
+      "Prevent declines in agricultural yields during climatic stress",
+      "Strengthening of current agricultural and weather insurance mechanisms",
+      "Development and validation of weather derivative models",
+      "Creation of web-enabled, regional language based services for facilitation of weather-based insurance",
+      "Development of GIS and remote-sensing methodologies for detailed soil resource mapping and land use planning",
+      "Mapping vulnerable eco-regions and pest and disease hotspots",
+      "Developing and implementing region-specific contingency plans based on vulnerability and risk scenarios",
+      "Development of regional databases of soil, weather, genotypes, land-use patterns and water resources",
+      "Providing information on off-season crops, aromatic and medicinal plants, greenhouse crops, pasture development, agro-forestry, livestock and agro-processing",
+      "Collation and dissemination of block-level data on agro-climatic variables, land-use, and socio-economic features and preparation of state-level agro-dimatic atlases",
+      "Use of genetic engineering to convert C-3 crops to the more carbon responsive C-4 crops",
+      "Development of crops with better water and nitrogen use efficiency",
+      "Development of nutritional strategies for managing heat stress in dairy animals"
+    ],
+    "impact_estimate": "India is likely to be water scarce by 2050",
+    "global_alignment": "Aligned with the IPCC-AR4",
+    "linked_ndcs_or_sdgs": "National Environment Policy, 2006"
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec9",
+    "title": "other initiatives",
+    "summary": "The document discusses the creation of a National Knowledge Network to benefit climate modellers and the need for human resource development to meet climate change challenges. It also discusses the current energy mix in India and strategies for GHG mitigation in power generation, including the use of supercritical technologies, IGCC technology, natural gas-based power plants, and a three-stage nuclear power programme.",
+    "sector": "Energy",
+    "sub_sectors": [
+      "Power Generation",
+      "Human Resource Development",
+      "Network Infrastructure"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan",
+    "policy_tools": [
+      "National Knowledge Network",
+      "Grid Computing",
+      "Supercritical Technologies",
+      "IGCC Technology",
+      "Natural Gas Based Power Plants",
+      "Three Stage Nuclear Power Programme"
+    ],
+    "responsible_ministries": [
+      "Various Ministries of the Government",
+      "Department of Atomic Energy"
+    ],
+    "linked_documents": null,
+    "timeline": "11th Plan, 12th Plan, next 30-50 years, upto 2050",
+    "targets": [
+      "Creation of an integrated National Knowledge Network",
+      "Augment super-computing resources",
+      "Enhance human resources through changes in curricula, introduction of new programmes, and training of professionals",
+      "Assessment of additional skills required at the national, state and local levels",
+      "Retire or recondition 5000 MW of coal thermal plants with low capacity utilization and low conversion efficiency during the 11th Plan",
+      "Retire or recondition an additional 10,000 MW of the least efficient operating plants during the 12th Plan",
+      "Adopt supercritical boilers and ultra-supercritical boilers for coal-based power generation",
+      "Construction of several supercritical coal based power projects",
+      "Research and development for combined cycle natural gas plants",
+      "Development of materials for use in steam generator tubes, main steam piping, and high-pressure turbines that can withstand high pressure and high temperatures",
+      "Development of know-how related to heat transfer, pressure drop, and flow stability at ultra-supercritical conditions",
+      "Integrated gasification combined cycle technology for coal-based power generation",
+      "Set up a 125 MW plant at Vijayawada using indigenous IGCC technology",
+      "Introduction of advance class turbines for natural gas based power generation",
+      "Promotion of nuclear energy through enhancing nuclear capacity and adoption of fast breeder and thorium-based thermal reactor technology",
+      "Construction of a 300 MW Advanced Heavy Water Reactor (AHWR) due to begin in the 11th Plan"
+    ],
+    "impact_estimate": "For every 1% rise in efficiency, there is a 2% decrease in C02 release. Natural gas based power generation is cleaner than coal-based generation as co2 emissions are only - 50% compared to coal."
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec10",
+    "title": "other technologies",
+    "summary": "This section discusses the importance of nuclear energy sustainability, efficient transmission and distribution, and hydropower in the context of climate change mitigation. It also explores other renewable energy technologies, their advantages, disadvantages, and potential to replace fossil fuels. The section further discusses the need for research and development, technology transfer, and capacity building in these areas. It also highlights the role of regulatory and tariff regimes in mainstreaming renewable energy sources.",
+    "sector": "Energy",
+    "sub_sectors": [
+      "Nuclear Energy",
+      "Transmission and Distribution",
+      "Hydropower",
+      "Renewable Energy Technologies",
+      "Power Generation",
+      "Transportation and Industrial Fuels"
+    ],
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan on Climate Change",
+    "policy_tools": [
+      "Research and Development",
+      "Technology Transfer",
+      "Capacity Building",
+      "Regulatory/Tariffs Regime"
+    ],
+    "responsible_ministries": [
+      "Ministry of New and Renewable Energy"
+    ],
+    "linked_documents": [],
+    "impact_estimate": "India's hydropower potential at 148,700 MW. The hydroelectric capacity currently under operation is about 28,000 MW, while 14,000 MW capacity is under various stages of development. The CEA has also identified 56 sites for pumped storage schemes with an estimated aggregate installed capacity of 94,000 MW. In addition, a potential of 15,000 MW in terms of installed capacity is estimated from small, mini, and micro-hyde! projects.",
+    "financial_outlay": "Investment cost for biomass combustion based power projects or co-generation projects varies between Rs. 4 to Rs. 5 crores per MW, depending upon project site, design and operation related factors. The cost of electricity generation is around Rs. 3/kWh depending upon specific fuel consumption, which in turn depends on type of fuel and operating pressure of the boiler and steam turbine.",
+    "compliance_type": "The Electricity Act, 2003 and the National Tariff Policy, 2006, provide for both the Central Electricity Regulatory Commission (CERC) and the State Electricity Regulatory Commissions (SERC) to prescribe a certain percentage of total power purchased by the grid from renewable based sources.",
+    "targets": "A dynamic minimum renewables purchase standard (DMRPS) may be set, with escalation each year till a pre-defined level is reached, at which time the requirements may be revisited. It is suggested that starting 2009-10, the national renewables standard (excluding hydropower with storage capacity in excess of daily peaking capacity, or based on agriculture based renewables sources that are used for human food) may be set at 5% of total grids purchase, to increase by 1% each year for 10 years.",
+    "kpis": "The installed capacity for using wind energy has gone up rapidly during the last few years (presently about 8000 MW). However, the capacity utilization factors are low due to the variations in the wind flow."
+  },
+  {
+    "section_id": "policy_IN_2022_NAPCC.pdf_manual_split_sec11",
+    "title": "miscellaneous",
+    "summary": "This section discusses potential pathways for deriving transportation and industrial fuels, disaster management response to extreme climate events, protection of coastal areas, health sector response to climate change, capacity building at different levels of government, and international cooperation on climate change. It emphasizes the need for technology development, disaster risk reduction, coastal protection, enhanced public health care services, capacity building, and international cooperation for effective climate change mitigation and adaptation.",
+    "sector": "Energy, Disaster Management, Coastal Protection, Health, Governance, International Cooperation",
+    "sub_sectors": "Transportation, Industrial Fuels, Infrastructure, Public Health Care Services, Capacity Building",
+    "intent_tags": [
+      "Mitigation",
+      "Adaptation",
+      "Governance"
+    ],
+    "policy_type": "National Action Plan",
+    "policy_tools": [
+      "Technology Development",
+      "Disaster Risk Reduction",
+      "Coastal Protection",
+      "Enhanced Public Health Care Services",
+      "Capacity Building",
+      "International Cooperation"
+    ],
+    "responsible_ministries": "Not specified",
+    "linked_documents": "UN Framework Convention on Climate Change, Kyoto Protocol",
+    "targets": "Minimizing the negative impacts of climate change through suitable adaptation measures in the countries and communities affected and mitigation at the global level, Provide fairness and equity in the actions and measures, Uphold the principle of common but differentiated responsibilities in actions to be taken, such as concessional financial flows from the developed countries, and access to technology on affordable terms",
+    "global_alignment": "As a party to the UN Framework Convention on Climate Change and its Kyoto Protocol, India plays an active role in multilateral cooperation to address climate change.",
+    "compliance_type": "International Cooperation: the Multilateral Regime on Climate Change",
+    "is_legally_binding": "In some cases legislation may be required at the central and state levels to arrive at appropriate delegation of responsibility and authority for meeting some of the goals mentioned above.",
+    "mrv_system": "Monitoring river flows and mapping flood zones, Generation of regional scenarios based on single or multi-hazard mapping, Disaster response training at the community level, Upgrading forecasting, tracking and early warning system for cyclones, floods, storms and tsunami",
+    "monitoring_mechanism": "Ensuring that communication channels are not severed during disasters can protect lives and expedite relief and rehabilitation operations. Furthermore, it is essential to have a regular monitoring programme in place to provide early warning of imminent disasters to facilitate a planned response, including evacuation from vulnerable areas to minimize the impact of disasters."
+  }
+]
