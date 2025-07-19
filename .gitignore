@@ -6,7 +6,6 @@ __pycache__/
 *.pyc
 .env
 
-
 # Virtual Environment
 venv/
 env/
@@ -37,6 +36,7 @@ build/
 
 # Database
 db.sqlite3
+*.sqlite3
 
 # Render/Deployment
 *.render
