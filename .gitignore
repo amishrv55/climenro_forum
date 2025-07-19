@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.sqlite3
 *.log
+*.pyc
 
 # Virtual Environment
 venv/
@@ -34,6 +35,7 @@ build/
 
 # Database
 db.sqlite3
+*.sqlite3
 
 # Render/Deployment
 *.render
