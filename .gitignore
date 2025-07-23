@@ -4,6 +4,7 @@ __pycache__/
 *.sqlite3
 *.log
 *.pyc
+.env
 
 # Virtual Environment
 venv/
@@ -22,7 +23,7 @@ media/
 .idea/
 .vscode/
 *.bak
-*.~ 
+*.~
 
 # Environment
 .env
