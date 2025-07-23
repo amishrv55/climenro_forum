@@ -96,6 +96,13 @@ def upload_metadata(request):
 
     return render(request, 'policy_analysis/upload.html')
 
+def clean_policy_title(raw_title):
+    # Remove leading 'policy_COUNTRY_DATE_' prefix
+    parts = raw_title.split('_')
+    if len(parts) > 4 and parts[0].lower() == 'policy':
+        return ' '.join(parts[4:]).replace('(', ' (').replace(')', ')').strip().title()
+    return raw_title.replace('_', ' ').title()
+
 
 def explore_metadata(request):
     country = request.GET.get('country', '').strip()
@@ -153,22 +160,32 @@ def policy_graph_view(request):
 
     nodes_dict = {}
     links = []
+    seen_edges = set()  # To avoid duplicates like (A→B) and (B→A)
 
     for rel in relationships:
         parent_id = rel.parent_policy.policy_id
         child_id = rel.child_policy.policy_id
 
+        # Normalize the edge direction (A, B) == (B, A)
+        edge_key = tuple(sorted([parent_id, child_id]))
+
+        if edge_key in seen_edges:
+            continue  # Skip duplicate edge in reverse
+        seen_edges.add(edge_key)
+
+        # Add nodes
         nodes_dict[parent_id] = {
             "id": parent_id,
-            "title": rel.parent_policy.title,
+            "title": clean_policy_title(rel.parent_policy.title),
             "group": 1
         }
         nodes_dict[child_id] = {
             "id": child_id,
-            "title": rel.child_policy.title,
+            "title": clean_policy_title(rel.child_policy.title),
             "group": 1
         }
 
+        # Add only one edge
         links.append({
             "source": parent_id,
             "target": child_id,
@@ -181,4 +198,5 @@ def policy_graph_view(request):
         "links_json": json.dumps(links),
         "country": country
     }
+
     return render(request, 'policy_analysis/policy_graph.html', context)
