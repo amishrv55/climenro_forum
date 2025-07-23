@@ -6,6 +6,19 @@ from django.contrib import messages
 from .models import Policy, PolicySection
 from .relationship_logic import create_relationships_for_new_policy
 from .models import PolicyRelationship
+from django.db.models import Q, F
+
+# Helper to extract unique values from list fields
+def extract_unique_json_values(queryset, field):
+    values = set()
+    for obj in queryset:
+        items = getattr(obj, field, [])
+        if isinstance(items, list):
+            for item in items:
+                if isinstance(item, str):
+                    parts = [p.strip().lower() for p in item.split(',')]
+                    values.update(parts)
+    return sorted(values)
 
 
 def policy_home(request):
@@ -149,43 +162,83 @@ def policy_detail(request, policy_id):
     return render(request, 'policy_analysis/policy_detail.html', context)
 
 
+def generate_abbreviation(title):
+    words = title.replace('_', ' ').split()
+    clean_words = [w for w in words if w and not w.isdigit() and not w[:4].isdigit()]
+    abbrev = ''.join([w[0].upper() for w in clean_words if w[0].isalpha()])
+    return abbrev[:4]
+
 def policy_graph_view(request):
     country = request.GET.get("country")
+    min_score = float(request.GET.get("score", 0))
+    sector = request.GET.get("sector")
+    ministry = request.GET.get("ministry")
+    compliance = request.GET.get("compliance")
+
+    relationships = PolicyRelationship.objects.select_related('parent_policy', 'child_policy')
 
     if country:
-        relationships = PolicyRelationship.objects.select_related('parent_policy', 'child_policy')\
-            .filter(parent_policy__country=country, child_policy__country=country)
-    else:
-        relationships = PolicyRelationship.objects.select_related('parent_policy', 'child_policy')
+        relationships = relationships.filter(
+            parent_policy__country=country,
+            child_policy__country=country
+        )
+
+    if min_score:
+        relationships = relationships.filter(similarity_score__gte=min_score)
+
+    if sector:
+        relationships = relationships.filter(
+            Q(parent_policy__sectors__icontains=sector) |
+            Q(child_policy__sectors__icontains=sector)
+        )
+
+    if ministry:
+        relationships = relationships.filter(
+            Q(parent_policy__responsible_ministries__icontains=ministry) |
+            Q(child_policy__responsible_ministries__icontains=ministry)
+        )
+
+    if compliance:
+        relationships = relationships.filter(
+            Q(parent_policy__sections__compliance_type__icontains=compliance) |
+            Q(child_policy__sections__compliance_type__icontains=compliance)
+        ).distinct()
 
     nodes_dict = {}
     links = []
-    seen_edges = set()  # To avoid duplicates like (A→B) and (B→A)
+    seen_edges = set()
 
     for rel in relationships:
         parent_id = rel.parent_policy.policy_id
         child_id = rel.child_policy.policy_id
 
-        # Normalize the edge direction (A, B) == (B, A)
         edge_key = tuple(sorted([parent_id, child_id]))
-
         if edge_key in seen_edges:
-            continue  # Skip duplicate edge in reverse
+            continue
         seen_edges.add(edge_key)
 
-        # Add nodes
-        nodes_dict[parent_id] = {
-            "id": parent_id,
-            "title": clean_policy_title(rel.parent_policy.title),
-            "group": 1
-        }
-        nodes_dict[child_id] = {
-            "id": child_id,
-            "title": clean_policy_title(rel.child_policy.title),
-            "group": 1
-        }
+        if parent_id not in nodes_dict:
+            full_title = clean_policy_title(rel.parent_policy.title)
+            abbrev = generate_abbreviation(full_title)
+            nodes_dict[parent_id] = {
+                "id": parent_id,
+                "title": full_title,
+                "label": abbrev,
+                "url": f"/analysis/explore/{parent_id}/",
+                "group": 1
+            }
 
-        # Add only one edge
+        if child_id not in nodes_dict:
+            full_title = clean_policy_title(rel.child_policy.title)
+            abbrev = generate_abbreviation(full_title)
+            nodes_dict[child_id] = {
+                "id": child_id,
+                "title": full_title,
+                "label": abbrev,
+                "url": f"/analysis/explore/{child_id}/",
+                "group": 1
+            }
+
         links.append({
             "source": parent_id,
             "target": child_id,
@@ -193,10 +246,29 @@ def policy_graph_view(request):
             "score": rel.similarity_score
         })
 
+    all_policies = Policy.objects.all()
+    all_sections = PolicySection.objects.all()
+
+    unique_sectors = extract_unique_json_values(all_policies, "sectors")
+    unique_ministries = extract_unique_json_values(all_policies, "responsible_ministries")
+    unique_compliance_types = sorted(set(filter(None, all_sections.values_list('compliance_type', flat=True))))
+
+    legend_items = sorted([
+        {"abbr": n["label"], "title": n["title"]} for n in nodes_dict.values()
+    ], key=lambda x: x["abbr"])
+
     context = {
         "nodes_json": json.dumps(list(nodes_dict.values())),
         "links_json": json.dumps(links),
-        "country": country
+        "legend": legend_items,
+        "country": country,
+        "sector": sector,
+        "ministry": ministry,
+        "compliance": compliance,
+        "score": min_score,
+        "sector_choices": unique_sectors,
+        "ministry_choices": unique_ministries,
+        "compliance_choices": unique_compliance_types,
     }
 
     return render(request, 'policy_analysis/policy_graph.html', context)

@@ -3,157 +3,195 @@
 
 <h2>📊 Policy Knowledge Graph</h2>
 
-<form method="get">
-  <label>Select Country:</label>
-  <select name="country" onchange="this.form.submit()">
+<form method="get" style="margin-bottom: 20px;">
+  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    <label>
+      Country:
+      <select name="country">
+        <option value="">All</option>
+        <option value="IN" {% if country == "IN" %}selected{% endif %}>India</option>
+        <option value="US" {% if country == "US" %}selected{% endif %}>USA</option>
+        <option value="SG" {% if country == "SG" %}selected{% endif %}>Singapore</option>
+      </select>
+    </label>
+
+    <label>
+      Min Score:
+      <select name="score">
+        <option value="0" {% if score == 0 %}selected{% endif %}>All</option>
+        <option value="0.5" {% if score == 0.5 %}selected{% endif %}>> 0.5</option>
+        <option value="0.6" {% if score == 0.6 %}selected{% endif %}>> 0.6</option>
+        <option value="0.7" {% if score == 0.7 %}selected{% endif %}>> 0.7</option>
+      </select>
+    </label>
+
+    <label>
+  Sector:
+  <select name="sector">
     <option value="">All</option>
-    <option value="IN" {% if country == "IN" %}selected{% endif %}>India</option>
-    <option value="US" {% if country == "US" %}selected{% endif %}>USA</option>
-    <option value="SG" {% if country == "SG" %}selected{% endif %}>Singapore</option>
+    {% for s in sector_choices %}
+      <option value="{{ s }}" {% if s == sector %}selected{% endif %}>{{ s }}</option>
+    {% endfor %}
   </select>
+</label>
+
+<label>
+  Ministry:
+  <select name="ministry">
+    <option value="">All</option>
+    {% for m in ministry_choices %}
+      <option value="{{ m }}" {% if m == ministry %}selected{% endif %}>{{ m }}</option>
+    {% endfor %}
+        </select>
+        </label>
+
+        <label>
+        Compliance Type:
+        <select name="compliance">
+            <option value="">All</option>
+            {% for c in compliance_choices %}
+            <option value="{{ c }}" {% if c == compliance %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+        </label>
+
+
+    <button type="submit">Apply Filters</button>
+  </div>
 </form>
 
-<svg width="1000" height="600"></svg>
+<div style="display: flex;">
+  <svg width="1000" height="600"></svg>
+
+  <div style="margin-left: 30px; max-height: 600px; overflow-y: auto;">
+    <h4>🧾 Legend</h4>
+    <ul style="font-size: 13px; padding-left: 1em;">
+      {% for item in legend %}
+        <li><strong>{{ item.abbr }}</strong>: {{ item.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 
 <style>
-    svg {
-        background: #f5f5f5;
-    }
-    .edge-label {
-        font-family: sans-serif;
-        pointer-events: none;
-        user-select: none;
-    }
-    .graph-link {
-        stroke-opacity: 0.6;
-    }
+  svg {
+    background: #f5f5f5;
+  }
+  .edge-label {
+    font-family: sans-serif;
+    pointer-events: none;
+    user-select: none;
+  }
 </style>
 
-<!-- JSON data -->
 <script id="nodes-data" type="application/json">{{ nodes_json|safe }}</script>
 <script id="links-data" type="application/json">{{ links_json|safe }}</script>
-
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
-    const nodes = JSON.parse(document.getElementById("nodes-data").textContent);
-    const links = JSON.parse(document.getElementById("links-data").textContent);
+  const nodes = JSON.parse(document.getElementById("nodes-data").textContent);
+  const links = JSON.parse(document.getElementById("links-data").textContent);
 
-    const svg = d3.select("svg");
-    const width = +svg.attr("width");
-    const height = +svg.attr("height");
+  const svg = d3.select("svg");
+  const width = +svg.attr("width");
+  const height = +svg.attr("height");
 
-    const container = svg.append("g");
+  const container = svg.append("g");
 
-    // Enable zoom & pan
-    svg.call(d3.zoom()
-        .scaleExtent([0.5, 2])
-        .on("zoom", (event) => {
-            container.attr("transform", event.transform);
-        }));
+  svg.call(d3.zoom()
+    .scaleExtent([0.5, 2])
+    .on("zoom", (event) => {
+      container.attr("transform", event.transform);
+    }));
 
-    // Simulation setup
-    const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(200))
-        .force("charge", d3.forceManyBody().strength(-400))
-        .force("center", d3.forceCenter(width / 2, height / 2));
+  const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(200))
+    .force("charge", d3.forceManyBody().strength(-400))
+    .force("center", d3.forceCenter(width / 2, height / 2));
 
-    // Links with color
-    const link = container.append("g")
-        .selectAll("line")
-        .data(links)
-        .join("line")
-        .attr("class", "graph-link")
-        .attr("stroke", d => {
-            if (d.type === 'revision_of') return "#2ca02c";
-            if (d.type === 'amendment_of') return "#ff7f0e";
-            return "#1f77b4";  // related_to
-        })
-        .attr("stroke-width", d => d.score * 5);
+  const link = container.append("g")
+    .selectAll("line")
+    .data(links)
+    .join("line")
+    .attr("stroke", d => {
+      if (d.type === 'revision_of') return "#2ca02c";
+      if (d.type === 'amendment_of') return "#ff7f0e";
+      return "#1f77b4";
+    })
+    .attr("stroke-width", d => d.score * 5)
+    .attr("class", "graph-link");
 
-    // Edge labels (text shown at mid-point of line)
-    const edgeLabels = container.append("g")
-        .selectAll("text")
-        .data(links)
-        .enter()
-        .append("text")
-        .attr("class", "edge-label")
-        .attr("font-size", "10px")
-        .attr("fill", "#444")
-        .attr("text-anchor", "middle")
-        .text(d => `${d.type} (${d.score.toFixed(2)})`);
+  const edgeLabels = container.append("g")
+    .selectAll("text")
+    .data(links)
+    .enter()
+    .append("text")
+    .attr("class", "edge-label")
+    .attr("font-size", "10px")
+    .attr("fill", "#444")
+    .attr("text-anchor", "middle")
+    .text(d => `${d.type} (${d.score.toFixed(2)})`);
 
-    // Tooltip for accessibility (optional)
-    link.append("title")
-        .text(d => `Relationship: ${d.type}\nScore: ${d.score}`);
-
-    // Nodes
-    const node = container.append("g")
-        .selectAll("circle")
-        .data(nodes)
-        .join("circle")
-        .attr("r", 20)
-        .attr("fill", "#3c8dbc")
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 1.5)
-        .call(drag(simulation));
-
-    // Node hover tooltip
-    node.append("title")
-        .text(d => d.title);
-
-    // Node labels
-    const label = container.append("g")
-        .selectAll("text")
-        .data(nodes)
-        .join("text")
-        .text(d => d.title)
-        .attr("font-size", 12)
-        .attr("x", 6)
-        .attr("y", 3);
-
-    simulation.on("tick", () => {
-        link
-            .attr("x1", d => d.source.x)
-            .attr("y1", d => d.source.y)
-            .attr("x2", d => d.target.x)
-            .attr("y2", d => d.target.y);
-
-        node
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y);
-
-        label
-            .attr("x", d => d.x + 12)
-            .attr("y", d => d.y);
-
-        edgeLabels
-            .attr("x", d => (d.source.x + d.target.x) / 2)
-            .attr("y", d => (d.source.y + d.target.y) / 2 - 4);
+  const node = container.append("g")
+    .selectAll("circle")
+    .data(nodes)
+    .join("circle")
+    .attr("r", 20)
+    .attr("fill", "#3c8dbc")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .call(drag(simulation))
+    .on("click", (event, d) => {
+      window.open(d.url, '_blank');
     });
 
-    function drag(simulation) {
-        function dragstarted(event, d) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
+  node.append("title").text(d => d.title);
 
-        function dragged(event, d) {
-            d.fx = event.x;
-            d.fy = event.y;
-        }
+  const label = container.append("g")
+    .selectAll("text")
+    .data(nodes)
+    .join("text")
+    .text(d => d.label)
+    .attr("font-size", 12)
+    .attr("x", 6)
+    .attr("y", 3);
 
-        function dragended(event, d) {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
+  simulation.on("tick", () => {
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
 
-        return d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended);
+    node
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y);
+
+    label
+      .attr("x", d => d.x + 12)
+      .attr("y", d => d.y);
+
+    edgeLabels
+      .attr("x", d => (d.source.x + d.target.x) / 2)
+      .attr("y", d => (d.source.y + d.target.y) / 2 - 4);
+  });
+
+  function drag(simulation) {
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
     }
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+    return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+  }
 </script>
 
 {% endblock %}
