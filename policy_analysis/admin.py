@@ -2,6 +2,8 @@
 
 from django.contrib import admin
 from .models import Policy, PolicySection
+from .models import PolicyRelationship
+
 
 @admin.register(Policy)
 class PolicyAdmin(admin.ModelAdmin):
@@ -15,3 +17,11 @@ class PolicySectionAdmin(admin.ModelAdmin):
     list_display = ('title', 'policy', 'sector')
     search_fields = ('title', 'policy__title', 'sector')
     list_filter = ('sector', 'policy__title')
+    
+
+@admin.register(PolicyRelationship)
+class PolicyRelationshipAdmin(admin.ModelAdmin):
+    list_display = ('parent_policy', 'child_policy', 'relationship_type', 'similarity_score', 'created_at')
+    search_fields = ('parent_policy__title', 'child_policy__title')
+    list_filter = ('relationship_type',)
+    ordering = ('-similarity_score',)

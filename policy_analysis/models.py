@@ -55,3 +55,19 @@ class PolicySection(models.Model):
 
     def __str__(self):
         return f"{self.policy.title} - {self.title}"
+
+class PolicyRelationship(models.Model):
+    parent_policy = models.ForeignKey('Policy', on_delete=models.CASCADE, related_name='child_links')
+    child_policy = models.ForeignKey('Policy', on_delete=models.CASCADE, related_name='parent_links')
+
+    relationship_type = models.CharField(max_length=100, choices=[
+        ('revision_of', 'Revision Of'),
+        ('amendment_of', 'Amendment Of'),
+        ('related_to', 'Related To'),
+    ])
+    similarity_score = models.FloatField()
+    inferred_from = models.TextField()  # explanation or method used
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('parent_policy', 'child_policy', 'relationship_type')
