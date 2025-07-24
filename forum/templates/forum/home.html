@@ -73,7 +73,7 @@
         <h1 class="display-4 fw-bold mb-4">Advanced Climate Policy Intelligence</h1>
         <p class="lead mb-5" style="font-size: 1.25rem;">Harnessing AI to analyze, visualize, and predict the impact of global climate policies on emissions trajectories.</p>
         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-          <a href="{% url 'policy_graph:graph_view' %}" class="btn btn-teal btn-lg px-4 gap-3">
+          <a href="{% url 'policy_graph' %}" class="btn btn-teal btn-lg px-4 gap-3">
             <i class="fas fa-project-diagram me-2"></i> Explore Knowledge Graph
           </a>
           <a href="{% url 'dashboard:emission_intelligence' %}" class="btn btn-teal btn-lg px-4">
@@ -105,7 +105,7 @@
             <div class="mb-3">
               <i class="fas fa-robot text-teal fs-1"></i>
             </div>
-            <h5 class="card-title">AI Policy Analyzer</h5>
+            <a href="{% url 'policy_home' %}"><h5 class="btn btn-teal btn-lg px-4 gap-3"><b>AI Policy Analyzer</b></h5></a>
             <p class="card-text text-muted">Natural language processing extracts metadata, summarizes content, and models CO₂ impact from policy documents.</p>
           </div>
         </div>
@@ -120,7 +120,7 @@
             <div class="mb-3">
               <i class="fas fa-network-wired text-teal fs-1"></i>
             </div>
-            <h5 class="card-title">Policy Knowledge Graph</h5>
+            <a href="{% url 'policy_graph' %}"><h5 class="btn btn-teal btn-lg px-4 gap-3"><b>Policy Knowledge Graph</b></h5></a>
             <p class="card-text text-muted">Interactive visualization of policy relationships across jurisdictions and sectors.</p>
           </div>
         </div>
@@ -150,7 +150,7 @@
             <div class="mb-3">
               <i class="fas fa-chart-pie text-teal fs-1"></i>
             </div>
-            <h5 class="card-title">Analytical Dashboards</h5>
+            <a href="{% url 'dashboard:emission_intelligence' %}"><h5 class="btn btn-teal btn-lg px-4"><b>Analytical Dashboards</b></h5></a>
             <p class="card-text text-muted">Interactive visualization of emissions data from authoritative global sources.</p>
           </div>
         </div>
