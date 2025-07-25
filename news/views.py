@@ -1,6 +1,11 @@
 # Create your views here.
 from django.shortcuts import render, get_object_or_404
 from .models import NewsArticle
+from .models import Announcement
+
+def announcement_list(request):
+    announcements = Announcement.objects.filter(is_active=True).order_by('-date_posted')
+    return render(request, 'news/list.html', {'announcements': announcements})
 
 def news_detail(request, article_id):
     article = get_object_or_404(NewsArticle, id=article_id)

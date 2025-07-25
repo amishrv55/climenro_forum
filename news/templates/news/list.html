@@ -1,0 +1,18 @@
+{% extends "forum/base.html" %}
+{% block content %}
+  <div class="container">
+    <h2>📢 Announcements & Updates</h2>
+    <ul>
+      {% for announcement in announcements %}
+        <li>
+          <h4>{{ announcement.title }}</h4>
+          <small>{{ announcement.date_posted|date:"F j, Y, g:i a" }}</small>
+          <p>{{ announcement.content }}</p>
+        </li>
+        <hr>
+      {% empty %}
+        <p>No announcements at the moment.</p>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

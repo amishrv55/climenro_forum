@@ -21,4 +21,5 @@ urlpatterns = [
     path('terms/', views.terms, name='terms'),
     path('privacy/', views.privacy, name='privacy'),
     path('guidelines/', views.guidelines, name='guidelines'),
+    path('cookies/', views.cookies, name='cookies'),
 ]

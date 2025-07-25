@@ -270,3 +270,6 @@ def privacy(request):
 
 def guidelines(request):
     return render(request, 'guidelines.html')
+
+def cookies(request):
+    return render(request, 'cookies_policy.html')
