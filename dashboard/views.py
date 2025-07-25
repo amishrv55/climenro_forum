@@ -1450,3 +1450,19 @@ def dashboard_overview(request):
     ]
     return render(request, 'dashboard/overview.html', {"dashboards": dashboards})
 
+
+def about_view(request):
+    return render(request, 'dashboard/about.html')
+
+def mission_view(request):
+    return render(request, 'dashboard/mission.html')
+
+def careers_view(request):
+    return render(request, 'dashboard/careers.html')
+
+def what_we_do_view(request):
+    return render(request, 'dashboard/what_we_do.html')
+
+def our_team_view(request):
+    return render(request, 'dashboard/team.html')
+

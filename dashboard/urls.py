@@ -52,5 +52,10 @@ urlpatterns = [
     path("renewable/top-countries/", views.renewable_top_countries_view, name="renewable_top_countries"),
     path("renewable/fastest-growth/", views.renewable_fastest_growth_view, name="renewable_fastest_growth"),
     path("renewable/electricity-mix/", views.renewable_electricity_mix_view, name="renewable_electricity_mix"),
+    path("about/", views.about_view, name="about"),
+    path("mission/", views.mission_view, name="mission"),
+    path("careers/", views.careers_view, name="careers"),
+    path("what-we-do/", views.what_we_do_view, name="what_we_do"),
+    path("team/", views.our_team_view, name="our_team"),
 ]
 
