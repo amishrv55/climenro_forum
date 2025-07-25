@@ -1393,3 +1393,60 @@ def displacement_score_view(request):
 
 def displacement_guide_view(request):
     return render(request, "dashboard/displacement_guide.html")
+
+def dashboard_overview(request):
+    dashboards = [
+        {
+            "title": "GHG Insights",
+            "url": "dashboard:ghg_insights",
+            "description": "Overview of greenhouse gas emissions globally and by country."
+        },
+        {
+            "title": "GHG Trend",
+            "url": "dashboard:ghg_trend",
+            "description": "Trend analysis of major greenhouse gases over time."
+        },
+        {
+            "title": "CO2 Emissions",
+            "url": "dashboard:co2_emission",
+            "description": "Carbon dioxide emissions breakdown by country and sector."
+        },
+        {
+            "title": "CO2 Bio Emissions",
+            "url": "dashboard:co2_bio",
+            "description": "Biogenic CO2 emissions from natural and agricultural sources."
+        },
+        {
+            "title": "Total CO2",
+            "url": "dashboard:total_co2",
+            "description": "Total carbon emissions including fossil, bio, and other sources."
+        },
+        {
+            "title": "Methane (CH₄)",
+            "url": "dashboard:ch4_emissions",
+            "description": "Methane emissions data with sector-wise trends."
+        },
+        {
+            "title": "Nitrous Oxide (N₂O)",
+            "url": "dashboard:n2o_emissions",
+            "description": "Nitrous oxide emissions with agriculture and industrial sources."
+        },
+        {
+            "title": "Global Temperature Trends",
+            "url": "dashboard:global_temp_anomaly",
+            "description": "Global warming temperature anomaly trends since 1880."
+        },
+        {
+            "title": "Sea Level Rise",
+            "url": "dashboard:sea_level",
+            "description": "Trends and analysis of global sea level rise over time."
+        },
+        {
+            "title": "Renewable Energy Trends",
+            "url": "dashboard:renewable_trend",
+            "description": "Growth and patterns of renewable energy usage worldwide."
+        },
+        # Add more dashboards as needed...
+    ]
+    return render(request, 'dashboard/overview.html', {"dashboards": dashboards})
+

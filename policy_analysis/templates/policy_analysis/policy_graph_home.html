@@ -1,0 +1,607 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+
+{% block title %}Policy Knowledge Graph | Climenro Climate Intelligence{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Custom Styles for Policy Graph Page */
+    .policy-hero {
+        background: linear-gradient(135deg, rgba(10, 46, 56, 0.95) 0%, rgba(26, 75, 90, 0.95) 100%), 
+                    url('{% static "images/graph-bg.jpg" %}') no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 7rem 0 5rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .policy-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23000000" fill-opacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,197.3C672,192,768,160,864,144C960,128,1056,128,1152,133.3C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+        background-size: cover;
+        background-position: bottom;
+        z-index: 1;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .graph-icon {
+        font-size: 2.5rem;
+        color: #4db6ac;
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-header {
+        position: relative;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1rem;
+    }
+    
+    .section-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: #4db6ac;
+    }
+    
+    .feature-card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        background-color: white;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        background-color: #e0f7fa;
+        color: #1a4b5a;
+    }
+    
+    .node-demo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: 500;
+        color: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        background: linear-gradient(135deg, #4db6ac 0%, #1a4b5a 100%);
+        margin: 0 auto 1rem;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .edge-demo {
+        height: 4px;
+        background: #4db6ac;
+        margin: 1rem auto;
+        position: relative;
+    }
+    
+    .edge-demo::before, .edge-demo::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #4db6ac;
+        top: -3px;
+    }
+    
+    .edge-demo::before {
+        left: 0;
+    }
+    
+    .edge-demo::after {
+        right: 0;
+    }
+    
+    .use-case-card {
+        border-left: 4px solid #4db6ac;
+        transition: all 0.3s ease;
+        padding: 1.25rem;
+        background-color: white;
+        border-radius: 0 8px 8px 0;
+    }
+    
+    .use-case-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .filter-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .btn-climenro {
+        background-color: #4db6ac;
+        color: white;
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-climenro:hover {
+        background-color: #1a4b5a;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .highlight {
+        background: linear-gradient(120deg, rgba(77,182,172,0.2), transparent 70%);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
+    .graph-visual {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="policy-hero">
+    <div class="container hero-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <br>
+                <br>
+                <h1 class="display-4 fw-bold mb-4">Policy Knowledge Graph</h1>
+                <p class="lead mb-5" style="font-size: 1.25rem;">Interactive visualization of relationships between national climate policies</p>
+                <a href="{% url 'policy_graph' %}" class="btn btn-dark btn-lg px-4 py-2">
+                    <i class="fas fa-play-circle me-2"></i> Explore the Graph
+                </a>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What is a Policy Knowledge Graph -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-header">What is a Policy Knowledge Graph?</h2>
+                <p class="lead mb-4">
+                    The Policy Knowledge Graph is an interactive, metadata-driven visualization of relationships between national policies. 
+                    It helps researchers, analysts, and policymakers understand how policies evolve, relate, and influence one another over time.
+                </p>
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-network-wired fs-2 text-teal"></i>
+                    </div>
+                    <div>
+                        <h5>Network of Policy Relationships</h5>
+                        <p>A knowledge graph is a network of entities (policies) connected by relationships, enabling structured exploration and analysis.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-5 mt-lg-0">
+                <div class="graph-visual">
+                    <img src="{% static 'images/policy-graph-demo.png' %}" alt="Policy Knowledge Graph Visualization" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Important -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-header text-center mb-5">Why is this Important?</h2>
+        
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h5>Policy Evolution</h5>
+                    <p class="mb-0">Visual summary of policy development over time</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h5>Identify Relationships</h5>
+                    <p class="mb-0">Spot amendments, revisions, and overlapping scopes</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h5>Data-Driven Research</h5>
+                    <p class="mb-0">Enables evidence-based policy analysis and comparison</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-lock-open"></i>
+                    </div>
+                    <h5>Transparency</h5>
+                    <p class="mb-0">Provides structured access to public governance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Components -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-header text-center mb-5">Components of the Graph</h2>
+        
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center mb-4">
+                        <div class="node-demo">Policy A</div>
+                        <h4>Nodes: Represent Policies</h4>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 ps-0 d-flex">
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div>
+                                <h6>Policy Representation</h6>
+                                <p class="mb-0">Each node represents a unique policy document</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 d-flex mt-3">
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div>
+                                <h6>Labeling</h6>
+                                <p class="mb-0">Labeled with short abbreviations derived from policy titles</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 d-flex mt-3">
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </div>
+                            <div>
+                                <h6>Interactivity</h6>
+                                <p class="mb-0">Hover to see full name; click to view detailed metadata</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="feature-card p-4 h-100">
+                    <div class="text-center mb-4">
+                        <div class="edge-demo" style="width: 80%;"></div>
+                        <h4>Edges: Define Relationships</h4>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item border-0 ps-0 d-flex">
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div>
+                                <h6>Revision Relationship</h6>
+                                <p class="mb-0"><span class="highlight">revision_of</span>: One policy updates another</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 d-flex mt-3">
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div>
+                                <h6>Amendment Relationship</h6>
+                                <p class="mb-0"><span class="highlight">amendment_of</span>: Indicates an official amendment</p>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 d-flex mt-3">
+                            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div>
+                                <h6>Thematic Relationship</h6>
+                                <p class="mb-0"><span class="highlight">related_to</span>: Policies sharing thematic similarity</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <i class="fas fa-info-circle text-teal me-2"></i>
+                        Connection strength is defined by a similarity score visible on hover
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-header text-center mb-5">How the Policy Graph Works</h2>
+        
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
+                        <i class="fas fa-file-upload fa-2x"></i>
+                    </div>
+                    <h4>1. Policy Ingestion</h4>
+                    <p>Metadata is extracted from policy documents using NLP tools</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
+                        <i class="fas fa-cogs fa-2x"></i>
+                    </div>
+                    <h4>2. Policy Comparison</h4>
+                    <p>Policies are compared based on title similarity, policy tools, intent tags, sectors, etc.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
+                        <i class="fas fa-project-diagram fa-2x"></i>
+                    </div>
+                    <h4>3. Visualization</h4>
+                    <p>Nodes and edges are rendered dynamically using D3.js</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-card p-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex mb-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div>
+                            <h6>Fuzzy Logic Matching</h6>
+                            <p class="mb-0">Identifies relationships even with imperfect matches</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <h6>Temporal Precedence</h6>
+                            <p class="mb-0">Uses date-based hierarchy to determine relationship direction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filters & Use Cases -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h2 class="section-header mb-4">Advanced Filters</h2>
+                <p class="mb-4">Customize your view of the policy knowledge graph:</p>
+                
+                <div class="filter-card">
+                    <div class="d-flex mb-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div>
+                            <h6>Country</h6>
+                            <p class="mb-0">Focus on one nation's policies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div>
+                            <h6>Sector</h6>
+                            <p class="mb-0">Energy, Transport, Water, etc.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <div>
+                            <h6>Responsible Ministry</h6>
+                            <p class="mb-0">Filter by policy owner</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div>
+                            <h6>Compliance Type</h6>
+                            <p class="mb-0">Mandatory, Voluntary, etc.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div>
+                            <h6>Minimum Score</h6>
+                            <p class="mb-0">Filter weaker vs stronger connections</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <h2 class="section-header mb-4">Practical Use Cases</h2>
+                <p class="mb-4">The Policy Knowledge Graph enables impactful research:</p>
+                
+                <div class="use-case-card mb-3">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-road text-teal me-3 mt-1"></i>
+                        <div>
+                            <h5>Track Policy Evolution</h5>
+                            <p class="mb-0">Follow the development of policy themes over time</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="use-case-card mb-3">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-sitemap text-teal me-3 mt-1"></i>
+                        <div>
+                            <h5>Ministry Alignment</h5>
+                            <p class="mb-0">Visualize which ministries manage intersecting domains</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="use-case-card mb-3">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-align-left text-teal me-3 mt-1"></i>
+                        <div>
+                            <h5>Policy Alignment</h5>
+                            <p class="mb-0">Explore how climate-related policies align over years</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-history text-teal me-3 mt-1"></i>
+                        <div>
+                            <h5>Study Strategy Evolution</h5>
+                            <p class="mb-0">Analyze how national strategies develop through amendments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How to Use -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-header text-center mb-5">How to Use the Policy Graph</h2>
+        
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="feature-card text-center p-3 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-sliders-h fa-2x"></i>
+                    </div>
+                    <h5>Apply Filters</h5>
+                    <p>Use dropdowns to narrow your view</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="feature-card text-center p-3 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-mouse-pointer fa-2x"></i>
+                    </div>
+                    <h5>Hover on Nodes</h5>
+                    <p>See full policy names</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="feature-card text-center p-3 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-file-alt fa-2x"></i>
+                    </div>
+                    <h5>Click Nodes</h5>
+                    <p>Open full metadata for policies</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="feature-card text-center p-3 h-100">
+                    <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-arrows-alt-h fa-2x"></i>
+                    </div>
+                    <h5>Examine Edges</h5>
+                    <p>Hover to see relationship details</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <div class="feature-card py-5 mx-auto" style="max-width: 800px;">
+                <i class="fas fa-project-diagram fa-3x text-teal mb-3"></i>
+                <h3 class="mb-3">Built for Policy Intelligence</h3>
+                <p class="mb-4">This graph supports transparency and comparative research. Your feedback helps us improve.</p>
+                <a href="{% url 'policy_graph' %}" class="btn btn-climenro">
+                    <i class="fas fa-play-circle me-2"></i> Launch Graph Explorer
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -5,6 +5,7 @@ from . import views
 app_name = 'dashboard'
 
 urlpatterns = [
+    path('overview', views.dashboard_overview, name='dashboard_overview'),
     path('ghg/', views.ghg_insights, name='ghg_insights'),
     path('ghg-trend/', views.ghg_trend_view, name='ghg_trend'),
     path('co2-emission/', views.co2_emission_view, name='co2_emission'),

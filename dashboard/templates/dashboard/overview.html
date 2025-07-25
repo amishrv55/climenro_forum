@@ -1,0 +1,25 @@
+{% extends "forum/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard Overview - Climenro{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">📊 Climate Data Dashboards</h2>
+    <p class="mb-4">Explore a collection of data visualizations offering insights into emissions, energy, and global climate trends.</p>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for dashboard in dashboards %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ dashboard.title }}</h5>
+                    <p class="card-text">{{ dashboard.description }}</p>
+                    <a href="{% url dashboard.url %}" class="btn btn-outline-primary btn-sm">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

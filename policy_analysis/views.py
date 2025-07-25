@@ -24,6 +24,9 @@ def extract_unique_json_values(queryset, field):
 def policy_home(request):
     return render(request, 'policy_analysis/home.html')
 
+def policy_graph_home(request):
+    return render(request, 'policy_analysis/policy_graph_home.html')
+
 
 def parse_date(date_str):
     try:
